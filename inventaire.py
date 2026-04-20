@@ -19,7 +19,34 @@ class Inventaire():
         """
         self.armes = armes
         self.armures = armures
-        self.argent = argent
+        self._argent = 0
         self.vaisseau = vaisseau
         self.equipage = equipage
         self.nico = Nico()
+
+        self.argent = argent
+
+    @property
+    def argent(self) -> int:
+        return self._argent
+    
+    @argent.setter
+    def argent(self, argent) -> None:
+        if argent >= 0:
+            self._argent = argent
+
+    def to_dick(self) -> dict:
+        """prépare l'inventaire pour le convertir en json 
+
+        Returns:
+            dict: les info de l'inventaire  en dict
+        """
+        dick = {"armes": [], "armures": [], "argent": self.argent, "vaisseau": self.vaisseau.nom, "equpage": []}
+        for arme in self.armes:
+            dick["armes"].append(arme.nom)
+        for armure in self.armures:
+            dick["armures"].append(armure.nom)
+        for perso in self.equipage:
+            dick["equipage"].append(perso.nom)
+
+        return dick
