@@ -26,22 +26,25 @@ class Gestion():
             dragon_request = requests.Session().get("https://akabab.github.io/starwars-api/api/all.json").json()
             for perso in dragon_request:
                 if "Sith" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, shop["sabre_laser"], shop["none"]))
                 elif "Jedi Order" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, shop["sabre_laser"], shop["none"]))
+                elif "IG-88" in perso["name"]:
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, shop[""], shop["none"]))
+
                 elif "droid" in perso["species"]:
-                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, shop[""], shop["none"]))
                 elif "wookiee" in perso["species"]:
-                    self.personnages.append(Perso(perso["name"], "wookie", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "wookie", perso["species"], 100, shop[""], shop["none"]))
                 elif "Squadron" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "colored Squadron", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "colored Squadron", perso["species"], 100, shop[""], shop["none"]))
                 elif "New Republic" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, shop[""], shop["none"]))
                 elif "Resistance" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, shop[""], shop["none"]))
                 elif "Galactic Republic" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, shop[""], shop["none"]))
                 elif "Jabba Desilijic Tiure" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, shop[""], shop["none"]))
                 elif "Grievous" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 100, shop[""], shop[""]))
+                    self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 100, shop[""], shop["none"]))
