@@ -22,7 +22,7 @@ class Arme:
     
     @damage.setter
     def damage(self, damage:int) -> None:
-        if damage > 0:
+        if damage > -2:
             self._damage = damage
 
     @property
@@ -30,7 +30,7 @@ class Arme:
         return self._prix
     
     @prix.setter
-    def damage(self, prix:int) -> None:
+    def prix(self, prix:int) -> None:
         if prix > 0:
             self._prix = prix
 
@@ -40,5 +40,6 @@ class Arme:
         Returns:
             str: la description de l'arme
         """
-        return f"{self.nom}, {self.damage}, {self.prix}"
+        espaces = 7 - len(str(self.prix))
+        return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     

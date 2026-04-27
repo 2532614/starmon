@@ -12,11 +12,17 @@ class Armure:
         self.nom = nom
 
         self.pv = pv
-        self.prox = prix
+        self.prix = prix
 
 
     def __str__(self)-> None:
-        return f"{self.nom}, {self.pv}, {self.prix}"
+        """affiche la description de l'Arm-ure dans le shop
+
+        Returns:
+            str: la description de l'armure
+        """
+        espaces = 7 - len(str(self.prix))
+        return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     
     @property
     def prix(self)-> int:

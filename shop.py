@@ -2,102 +2,119 @@ from arme import Arme
 from armure import Armure
 class Shop:
     def __init__(self):
-        self.armes = [Arme("DC15 blaster", 25, 18000),
- Arme("blaster DC17", 18, 10000),
-Arme("poing(pas cool)" , 1, 0),
-Arme("poing_vader", 51, 0),
-Arme("etranglement de force", 99, 0),
-Arme("la_force(trop mainsteam)", 20, 0),
-Arme("poing_sidious",60, 0),
-Arme("eclaire(cool)", 100, 0),
-Arme("blaster(pas cool)",15, 1000),
-Arme("sabre_laser_vert", 32, 25000),
-Arme("sabre_laser_bleu", 32, 27000),
-Arme("sabre_laser_rouge",32, 35000),
-Arme("sabre_laser_jaune",32, 42000),
-Arme("sabre_laser_amethyste(cool)",32, 100000),
-Arme("sabre_laser_doree(Cool)",32, 450000),
-Arme("dark_saber(cool)",32, 500000),
-Arme("double_sabre_laser_rouge",34, 56000),
-Arme("double_sabre_laser_bleu",34, 43200),
-Arme("double_sabre_laser_vert",34, 40000),
-Arme("double_sabre_laser_jaune(pas cool)",34, 66999),
-Arme("sabre_laser", 32, 0),
-Arme("pistolet_westar_35(cool)", 17, 15000),
-Arme("fusil blaster lourd DLT-20A", 29, 23000),
-Arme("Pistolet blaster DL-44", 19, 10000 ),
-Arme("arbalete_laser(cool)", 32, 25001),
-Arme("vibro-lame(petite)(cool)",10, 3000),
-Arme("vibro-lame(moyenne)", 15, 7000),
-Arme("vibro-lame(grande)",20, 9999),
-Arme("fusil blaster E-5(pas cool)", 5, 69),
-Arme("blaster integre", 10, 0),
-Arme("lance-flamme(cool)", 18, 18000),
-
-]
+        self.armes = [
+            Arme("DC15 blaster", 20, 18000),
+            Arme("blaster DC17", 18, 10000),
+            Arme("blaster(pas cool)",15, 1000),
+            Arme("sabre laser vert", 32, 25000),
+            Arme("sabre laser bleu", 32, 27000),
+            Arme("sabre laser rouge",32, 35000),
+            Arme("sabre laser jaune",32, 42000),
+            Arme("sabre laser amethyste(cool)",32, 100000),
+            Arme("sabre laser_doree(Cool)",32, 450000),
+            Arme("dark saber(cool)",32, 500000),
+            Arme("double sabre laser rouge",34, 56000),
+            Arme("double sabre laser bleu",34, 43200),
+            Arme("double sabre laser vert",34, 40000),
+            Arme("double sabre laser jaune(pas cool)",34, 66999),
+            Arme("pistolet westar 35(cool)", 17, 15000),
+            Arme("fusil blaster lourd DLT-20A", 29, 23000),
+            Arme("Pistolet blaster DL-44", 19, 10000 ),
+            Arme("arbalete laser(cool)", 32, 25001),
+            Arme("vibro-lame(petite)(cool)",10, 3000),
+            Arme("vibro-lame(moyenne)", 15, 7000),
+            Arme("vibro-lame(grande)",20, 9999),
+            Arme("fusil blaster E-5(pas cool)", 5, 69),
+            Arme("lance-flamme(cool)", 18, 18000),
+            Arme("blaster integre", 10, 0),
+            Arme("zap", 6, 0),
+            Arme("sabre vader", 64, 0),
+            Arme("double sabre maul", 49, 0),
+            Arme("mini poing", 20, 0),
+            Arme("C3-poingO", -2, 0), Arme("poing(pas cool)" , 1, 0),
+            Arme("poing vader", 40, 0),
+            Arme("etranglement de force", 85, 0),
+            Arme("la force(trop mainsteam)", 20, 0),
+            Arme("poing sidious",60, 0),
+            Arme("sabre laser", 32, 0),
+            Arme("eclaire(badass)", 100, 0),
+            Arme("poing", 1, 0)
+            ]
+        
+        self.consommable = ["ration", "carburant"]
+        self.parti_vaisseau = ["renforcement de coque", "tourelles optimisées", "moteur SRB42", "hyperdrive class 9"]
 
         self.armures = [
-    Armure("armure mandalorienne(cool)", 200, 70000),
-    Armure("armure de clone phase 1", 81, 8100),
-    Armure("armure de clone phase 2", 110, 13000),
-    Armure("armure de clone commando", 130, 17000),
-    Armure("armure de trooper(pas cool)", 20, 100),
-    Armure("armure de ferailles(pas cool)", 35, 20),
-    Armure("armure de chasseur de Prime", 80, 8000),
-    Armure("armure de chevalier jedi", 100, 10020),
-    Armure("armure de sith", 100, 10020),
-    Armure("armure katarn(cool)", 175, 50000)
+            Armure("armure mandalorienne(cool)", 200, 70000),
+            Armure("armure de clone phase 1", 81, 8100),
+            Armure("armure de clone phase 2", 110, 13000),
+            Armure("armure de clone commando", 130, 17000),
+            Armure("armure de trooper(pas cool)", 20, 100),
+            Armure("armure de ferailles(pas cool)", 35, 20),
+            Armure("armure de chasseur de Prime", 80, 8000),
+            Armure("armure de chevalier jedi", 100, 10020),
+            Armure("armure de sith", 100, 10020),
+            Armure("armure katarn(cool)", 175, 50000),
+            Armure("none", 0, 0)
+            ]
 
-]
+    def armurerie(self, nom:str) -> Arme | Armure:
+        """prend le nom d'un arme/armure et retourne l'objet correspondant
+
+        Args:
+            nom (str): le nom de l'objet à retourner
+
+        Returns:
+            Arme | Armure: l'objet à retourner
+        """
+        for arme in self.armes:
+            if nom == arme.nom:
+                return arme
+        for armure in self.armures:
+            if nom == armure.nom:
+                return armure
+
+    def black_marcket(self)-> None:
+        nb=0
+
+        print("="*15)
+        print(" LES ARMES")
+        print("="*15)
+
+        for arme in self.armes:
+            if arme.prix != 0:
+                print(f"{nb}. {arme}")
+                nb += 1
+        print("")
+        print("="*15)
+        print(" LES ARMURES")
+        print("="*15)
+
+        for armure in self.armures:
+            if armure.prix != 0:
+                print(f"{nb}. {armure}")
+                nb += 1
+                      
+        print("")
+        print("="*15)
+        print(" LES CONSOMMABLES")
+        print("="*15)
+        for x in range(2):
+            print(f"{nb}. 1      credit,    {self.consommable[x]}")
+            nb += 1
+
+        print("")
+        print("="*15)
+        print(" LES AMÉLIORATIONS DE VAISSEAU")
+        print("="*15)
+        for x in range(4):
+            print(f"{nb}. {42500 + 7500*x}   credit,    {self.parti_vaisseau[x]}")
+            nb += 1
+        
 
 
+Shop().black_marcket()
 
-[   
-    Arme("DC15 blaster", 25, 18000),
-    Arme("blaster DC17", 18, 10000),
-    Arme("poing(pas cool)" , 1, 0),
-    Arme("poing_vader", 51, 0),
-    Arme("etranglement de force", 99, 0),
-    Arme("la_force(trop mainsteam)", 20, 0),
-    Arme("poing_sidious",60, 0),
-    Arme("eclaire(cool)", 100, 0),
-    Arme("blaster(pas cool)",15, 1000),
-    Arme("sabre_laser_vert", 32, 25000),
-    Arme("sabre_laser_bleu", 32, 27000),
-    Arme("sabre_laser_rouge",32, 35000),
-    Arme("sabre_laser_jaune",32, 42000),
-    Arme("sabre_laser_amethyste(cool)",32, 100000),
-    Arme("sabre_laser_doree(Cool)",32, 450000),
-    Arme("dark_saber(cool)",32, 500000),
-    Arme("double_sabre_laser_rouge",34, 56000),
-    Arme("double_sabre_laser_bleu",34, 43200),
-    Arme("double_sabre_laser_vert",34, 40000),
-    Arme("double_sabre_laser_jaune(pas cool)",34, 66999),
-    Arme("sabre_laser", 32, 0),
-    Arme("pistolet_westar_35(cool)", 17, 15000),
-    Arme("fusil blaster lourd DLT-20A", 29, 23000),
-    Arme("Pistolet blaster DL-44", 19, 10000 ),
-    Arme("arbalete_laser(cool)", 32, 25001),
-    Arme("vibro-lame(petite)(cool)",10, 3000),
-    Arme("vibro-lame(moyenne)", 15, 7000),
-    Arme("vibro-lame(grande)",20, 9999),
-    Arme("fusil blaster E-5(pas cool)", 5, 69),
-    Arme("blaster integre", 10, 0),
-Arme("lance-flamme(cool)", 18, 18000),
+    
 
-]
-
-[
-    Armure("armure mandalorienne(cool)", 200, 70000),
-    Armure("armure de clone phase 1", 81, 8100),
-    Armure("armure de clone phase 2", 110, 13000),
-    Armure("armure de clone commando", 130, 17000),
-    Armure("armure de trooper(pas cool)", 20, 100),
-    Armure("armure de ferailles(pas cool)", 35, 20),
-    Armure("armure de chasseur de Prime", 80, 8000),
-    Armure("armure de chevalier jedi", 100, 10020),
-    Armure("armure de sith", 100, 10020),
-    Armure("armure katarn(cool)", 175, 50000),
-    Armure("none", 0, 0)
-
-]
+    
