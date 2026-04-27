@@ -1,11 +1,11 @@
-from arme import arme
-from armure import armure
+from arme import Arme
+from armure import Armure
 import random
 
 class Perso():
     """personnages
     """
-    def __init__(self, nom:str, groupe:str, race:str, pv:int, armes:list[Arme], armure:Armure, force:bool) -> None:
+    def __init__(self, nom:str, groupe:str, race:str, pv:int, armes:list[Arme], armure:Armure,) -> None:
         """cré le personnage
 
         Args:
@@ -23,7 +23,6 @@ class Perso():
         self._pv = 0
         self.armes = armes
         self.armure = armure
-        self.force = force
 
         self.pv = pv
 

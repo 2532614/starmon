@@ -1,5 +1,5 @@
 class Planete:
-    def __init__(self, nom: str, co: int, occupe: list[Personnage], detruit: bool)-> None:
+    def __init__(self, nom: str, co: int, occupants: list[Personnage], detruit: bool)-> None:
         """_summary_
 
         Args:
@@ -10,7 +10,7 @@ class Planete:
         """
         self.nom = nom
         self.co = co
-        self.occupe = occupe
+        self.occupants = occupants
         self.detruit = detruit
 
     def to_dick(self)-> dict:
@@ -19,7 +19,7 @@ class Planete:
         Returns:
             dict: prepare la planete pour le json
         """
-        return {"nom": self.nom, "co": self.co, "occupe": self.occupe, "detruit": self.detruit}
+        return {"nom": self.nom, "co": self.co, "occupants": self.occupants, "detruit": self.detruit}
     
 
 
