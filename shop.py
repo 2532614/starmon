@@ -1,7 +1,8 @@
 from arme import Arme
 from armure import Armure
+
 class Shop:
-    def __init__(self):
+    def __init__(self, vaisseau: list):
         self.armes = [
             Arme("DC15 blaster", 20, 18000),
             Arme("blaster DC17", 18, 10000),
@@ -57,6 +58,8 @@ class Shop:
             Armure("armure katarn(cool)", 175, 50000),
             Armure("none", 0, 0)
             ]
+        
+        self.vaisseau = vaisseau
 
     def armurerie(self, nom:str) -> Arme | Armure:
         """prend le nom d'un arme/armure et retourne l'objet correspondant
@@ -74,7 +77,7 @@ class Shop:
             if nom == armure.nom:
                 return armure
 
-    def black_marcket(self)-> None:
+    def print_black_marcket(self)-> None:
         nb=0
 
         print("="*15)
@@ -110,10 +113,41 @@ class Shop:
         for x in range(4):
             print(f"{nb}. {42500 + 7500*x}   credit,    {self.parti_vaisseau[x]}")
             nb += 1
+
+        print("="*15)
+        print(" LES VAISSEAUX")
+        print("="*15)
+
+        for vaisseaux in self.vaisseau:
+            if vaisseaux.prix != 0:
+                print(f"{nb}. {vaisseaux}")
+                nb += 1
         
+    def print_marcket(self)-> None:
+        nb = 0
+        print("="*15)
+        print(" LES VAISSEAUX")
+        print("="*15)
+
+        for vaisseaux in self.vaisseau:
+            if vaisseaux.prix != 0:
+                print(f"{nb}. {vaisseaux}")
+                nb += 1
 
 
-Shop().black_marcket()
+        print("")
+        print("="*15)
+        print(" LES CONSOMMABLES")
+        print("="*15)
+        for x in range(2):
+            print(f"{nb}. 1      credit,    {self.consommable[x]}")
+            nb += 1
+
+
+
+Shop().print_black_marcket()
+Shop().print_marcket()
+
 
     
 
