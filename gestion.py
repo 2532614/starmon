@@ -16,6 +16,7 @@ class Gestion():
         """
         self.personnages:list[Perso] = []
         self.shop = Shop()
+        self.planetes = []
     
     def call_apis(self) -> None:
         """appel des apis
@@ -23,6 +24,12 @@ class Gestion():
         try:
             self.charger_json()
         except FileNotFoundError:
+
+            dragon_request = requests.Session().get("https://swapi.info/api/planets").json()
+            for planete in dragon_request:
+                if planete["name"] == "Mustafar":
+                    mustafar = Planete(planete["name"], planete["orbital_period"])
+                planete.append(Planete(planete["name"], planete["orbital_period"]))
             
             dragon_request = requests.Session().get("https://akabab.github.io/starwars-api/api/all.json").json()
             for perso in dragon_request:
@@ -41,7 +48,7 @@ class Gestion():
                 elif "Jedi Order" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
                 elif "IG-88" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("Pistolet blaster DL-44")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 29, (self.shop.armurerie("poing"), self.shop.armurerie("Pistolet blaster DL-44")), self.shop.armurerie("none")))
                 elif "C-3PO" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("C3-poingO")), self.shop.armurerie("none")))
                 elif "droid" in perso["species"]:
