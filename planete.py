@@ -1,5 +1,7 @@
+from perso import Perso
+
 class Planete:
-    def __init__(self, nom: str, co: int, occupants: list[Personnage], detruit: bool)-> None:
+    def __init__(self, nom: str, co: int)-> None:
         """_summary_
 
         Args:
@@ -10,8 +12,8 @@ class Planete:
         """
         self.nom = nom
         self.co = co
-        self.occupants = occupants
-        self.detruit = detruit
+        self.occupants = []
+        self.detruit = False
 
     def to_dick(self)-> dict:
         """_summary_

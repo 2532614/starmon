@@ -1,7 +1,8 @@
 from arme import Arme
 from armure import Armure
+from inventaire import Inventaire
 
-class Shop:
+class Shop():
     def __init__(self, vaisseau: list):
         self.armes = [
             Arme("DC15 blaster", 20, 18000),
@@ -39,7 +40,9 @@ class Shop:
             Arme("poing sidious",60, 0),
             Arme("sabre laser", 32, 0),
             Arme("eclaire(badass)", 100, 0),
-            Arme("poing", 1, 0)
+            Arme("poing", 1, 0),
+            Arme("branch", 4, 0)
+
             ]
         
         self.consommable = ["ration", "carburant"]
@@ -56,6 +59,7 @@ class Shop:
             Armure("armure de chevalier jedi", 100, 10020),
             Armure("armure de sith", 100, 10020),
             Armure("armure katarn(cool)", 175, 50000),
+            Armure("plot armor", 100000, 0),
             Armure("none", 0, 0)
             ]
         
@@ -134,6 +138,8 @@ class Shop:
                 print(f"{nb}. {vaisseaux}")
                 nb += 1
 
+        print(f" {nb}. ne rien acheter")
+
 
         print("")
         print("="*15)
@@ -142,11 +148,37 @@ class Shop:
         for x in range(2):
             print(f"{nb}. 1      credit,    {self.consommable[x]}")
             nb += 1
+        print(f" {nb}. ne rien acheter")
+
+
+    def acheter(self, inventaire:Inventaire)-> None:
+        encore = 1
+        while encore == 1:
+            try:
+                choix =  input("quel shop voulez-vous allez?(1. marcket, 2.black marcket): ")
+
+                if choix == "1":
+                    self.print_marcket()
+                    choix2 = input("que voulez vous acheter?(uniquelement le #): ")
+                    if choix2 >= 0 and choix2 <= 22:
 
 
 
-Shop().print_black_marcket()
-Shop().print_marcket()
+                    encore = 2
+
+                elif choix == "2":
+                    self.print_black_marcket()
+                    encore = 2
+
+            except ValueError:
+                print("choix invalide, recommencez")
+        
+
+
+
+shop = Shop([])
+shop.print_black_marcket()
+shop.print_marcket()
 
 
     
