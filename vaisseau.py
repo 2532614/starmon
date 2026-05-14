@@ -1,19 +1,16 @@
 class Vaisseau:
-    def __init__(self, nom: str, modele: str, prix: int, cargo: int, vitesse: float, capacite_equipe: int):
+    def __init__(self, nom: str, modele: str, prix: int,vitesse: float):
         self.nom = nom
         self.modele = modele
         self._prix = 0
-        self._cargo = 0
         self._vitesse = 0
-        self._capacite_equipe = 0
 
         self.prix = prix
-        self.cargo = cargo
         self.vitesse = vitesse
-        self.capacite_equipe = capacite_equipe
 
 
-    def to_dick(self)-> dict:
+
+    def to_dick_uh_i_mean_dict(self)-> dict:
         """transforme l'objet en dictionnaire
 
         Returns:
@@ -34,7 +31,7 @@ class Vaisseau:
     
     @prix.setter
     def prix(self, prix:int) -> None:
-        if prix > 0:
+        if prix >= 0:
             self._prix = prix
 
     @property
@@ -43,7 +40,7 @@ class Vaisseau:
     
     @cargo.setter
     def cargo(self, cargo:int) -> None:
-        if cargo > 0:
+        if cargo > 31:
             self._cargo = cargo
 
 

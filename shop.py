@@ -1,9 +1,10 @@
 from arme import Arme
 from armure import Armure
 from inventaire import Inventaire
+import random
 
 class Shop():
-    def __init__(self, vaisseau: list):
+    def __init__(self):
         self.armes = [
             Arme("DC15 blaster", 20, 18000),
             Arme("blaster DC17", 18, 10000),
@@ -33,7 +34,8 @@ class Shop():
             Arme("sabre vader", 64, 0),
             Arme("double sabre maul", 49, 0),
             Arme("mini poing", 20, 0),
-            Arme("C3-poingO", -2, 0), Arme("poing(pas cool)" , 1, 0),
+            Arme("C3-poingO", -2, 0),
+            Arme("poing(pas cool)" , 1, 0),
             Arme("poing vader", 40, 0),
             Arme("etranglement de force", 85, 0),
             Arme("la force(trop mainsteam)", 20, 0),
@@ -63,7 +65,7 @@ class Shop():
             Armure("none", 0, 0)
             ]
         
-        self.vaisseau = vaisseau
+        self.vaisseaux = []
 
     def armurerie(self, nom:str) -> Arme | Armure:
         """prend le nom d'un arme/armure et retourne l'objet correspondant
@@ -122,9 +124,9 @@ class Shop():
         print(" LES VAISSEAUX")
         print("="*15)
 
-        for vaisseaux in self.vaisseau:
-            if vaisseaux.prix != 0:
-                print(f"{nb}. {vaisseaux}")
+        for vaisseau in self.vaisseaux:
+            if vaisseau.prix != 0:
+                print(f"{nb}. {vaisseau}")
                 nb += 1
         
     def print_marcket(self)-> None:
@@ -133,12 +135,12 @@ class Shop():
         print(" LES VAISSEAUX")
         print("="*15)
 
-        for vaisseaux in self.vaisseau:
-            if vaisseaux.prix != 0:
-                print(f"{nb}. {vaisseaux}")
+        for vaisseau in self.vaisseaux:
+            if vaisseau.prix != 0:
+                print(f"{nb}. {vaisseau}")
                 nb += 1
 
-        print(f" {nb}. ne rien acheter")
+        
 
 
         print("")
@@ -155,12 +157,30 @@ class Shop():
         encore = 1
         while encore == 1:
             try:
-                choix =  input("quel shop voulez-vous allez?(1. marcket, 2.black marcket): ")
+                choix =  input("quel shop voulez-vous allez?(1. marcket, 2. black marcket): ")
 
                 if choix == "1":
                     self.print_marcket()
-                    choix2 = input("que voulez vous acheter?(uniquelement le #): ")
-                    if choix2 >= 0 and choix2 <= 22:
+                    try:
+                        choix2 = int(input("que voulez vous acheter?(uniquelement le #): "))
+                        if choix2 >= 0 and choix2 <= 36:
+                        
+                            if inventaire.argent >= self.vaisseaux[choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.vaisseaux[choix2].prix)
+                                inventaire.vaisseau = self.vaisseaux[choix2].copy
+                        elif choix2 >37 and choix2 <= 38:
+                            
+                                if inventaire.argent >= self.consommable[37 - choix2].prix:
+                                    inventaire.argent - (random.randint(101, 111) / 100) * (self.consommable[37 - choix2].prix)
+                                if choix2 == 33 : 
+                                    inventaire.nb_carotte = self.consommable[37 - choix2]
+                                elif choix2 == 34:
+                                    inventaire.nb_carburant = self.consommable[37 - choix2]
+                        elif choix2 == 39:
+                            pass
+                    except ValueError:
+                        print("transaction non concluse")
+
 
 
 
@@ -168,17 +188,53 @@ class Shop():
 
                 elif choix == "2":
                     self.print_black_marcket()
+                    try:
+                        choix2 = int(input("que voulez vous acheter?(uniquelement le #): "))
+                        if choix2 >= 0 and choix2 <= 22:
+                            if inventaire.argent >= self.armes[choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.armes[choix2].prix)
+                                inventaire.armes = self.armes[choix2]
+                        elif choix2 >23 and choix2 <= 32:
+                            if inventaire.argent >= self.armures[23 - choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.armures[23 - choix2].prix)
+                                inventaire.armures = self.armures[23 - choix2]
+                        elif choix2 >33 and choix2 <= 34:
+                            if inventaire.argent >= self.consommable[33 - choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.consommable[33 - choix2].prix)
+                                if choix2 == 33 : 
+                                    inventaire.nb_carotte = self.consommable[33 - choix2]
+                                elif choix2 == 34:
+                                    inventaire.nb_carburant = self.consommable[33 - choix2]
+                        elif choix2 >35 and choix2 <= 38:
+                            if inventaire.argent >= self.parti_vaisseau[35 - choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.parti_vaisseau[35 - choix2].prix)
+                                try :
+                                    inventaire.vaisseau.nom += " (modifié)"
+                                except:
+                                    pass
+                                
+                        elif choix2 >39 and choix2 <= 75 :
+                            if inventaire.argent >= self.vaisseaux[39 - choix2].prix:
+                                inventaire.argent - (random.randint(101, 111) / 100) * (self.vaisseaux[39 - choix2].prix)
+                                inventaire.vaisseau = self.vaisseaux[39 - choix2].copy
+                        elif choix2 == 76:
+                            pass
+                    except ValueError:
+                        print("transaction non concluse")
+
+
                     encore = 2
 
             except ValueError:
-                print("choix invalide, recommencez")
+                pass
         
 
 
 
-shop = Shop([])
+shop = Shop()
 shop.print_black_marcket()
 shop.print_marcket()
+shop.acheter(Inventaire(0,0,1000000000,0,0))
 
 
     

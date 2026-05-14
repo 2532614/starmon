@@ -1,4 +1,3 @@
-import requests
 from arme import Arme
 from armure import Armure
 from vaisseau import Vaisseau
@@ -6,7 +5,11 @@ from planete import Planete
 from inventaire import Inventaire
 from perso import Perso
 from shop import Shop
+import requests
 import random
+import json
+
+"t-rn4_put3+s410p3"
 
 class Gestion():
     """gère le programe
@@ -14,9 +17,12 @@ class Gestion():
     def __init__(self) -> None:
         """decole la gestion du programme
         """
+        self.pp = Perso("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
+        self.inventaire = Inventaire([], [], 0, "", [])
         self.shop = Shop()
         self.planetes = []
+        self.planete = ""
     
     def call_apis(self) -> None:
         """appel des apis
@@ -28,15 +34,18 @@ class Gestion():
             dragon_request = requests.Session().get("https://swapi.info/api/planets").json()
             for planete in dragon_request:
                 if planete["name"] == "Mustafar":
-                    mustafar = Planete(planete["name"], planete["orbital_period"])
-                self.planetes.append(Planete(planete["name"], planete["orbital_period"]))
+                    mustafar = Planete(planete["name"], planete["orbital_period"], False)
+                else:
+                    self.planetes.append(Planete(planete["name"], planete["orbital_period"], False))
             self.planetes = self.tri_planete(self.planetes)
+            if "coruscant" == planete["name"]:
+                 Planete(planete["name"], -1)
             
             planete = mustafar
             for position in range(8):
                 self.planetes[50+position], planete = planete, self.planetes[50+position]
             self.planetes.append(planete)
-            self.planetes.append(Planete("Death Star", 0))
+            self.planetes.append(Planete("Death Star", 0, False))
 
             co = 0
             for id_planete in (61):
@@ -55,7 +64,7 @@ class Gestion():
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")), self.shop.armurerie("none")))
                     self.planetes[41].occupants.append(self.personnages[len(self.personnages)])
                 elif "Palpatine" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")),  self.shop.armurerie("none")))
                     self.planetes[61].occupants.append(self.personnages[len(self.personnages)])
                 elif "Grievous" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 200, (self.shop.armurerie("mini poing"), self.shop.armurerie("sabre")), self.shop.armurerie("none")))
@@ -114,11 +123,39 @@ class Gestion():
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
                         self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
-                self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
-                for id_planete in range(61):
-                    if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
-                        
+
+
+        dragon_request = requests.Session().get("swapi.info/api/starships").json()
+        for vaisseau in dragon_request:
+            vaisseaux = []
+            if "Death Star" == vaisseau["name"]:
+                pass
+            elif "TIE Advanced x1" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 30000, vaisseau["max_atmosphering_speed"]))
+            elif "Rebel transport" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 45000, vaisseau["max_atmosphering_speed"]))
+            elif "Slave 1" ==vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 100000, vaisseau["max_atmosphering_speed"]))
+            elif "Republic Cruiser" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 14000000, vaisseau["max_atmosphering_speed"]))
+            elif "Droid control ship" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 7500000, vaisseau["max_atmosphering_speed"]))
+            elif "Naboo Royal Starship" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 60000, vaisseau["max_atmosphering_speed"]))
+            elif "AA-9 Coruscant freighter" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 50000, vaisseau["max_atmosphering_speed"]))
+            elif "H-type Nubian yacht" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 45000, vaisseau["max_atmosphering_speed"]))
+            elif "Republic Assault ship" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 7000000, vaisseau["max_atmosphering_speed"]))
+            elif "Naboo star skiff" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 55000, vaisseau["max_atmosphering_speed"]))
+            elif "Millennium Falcon" == vaisseau["name"]:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 100000, vaisseau["max_atmosphering_speed"]))
+            else:
+                vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], int(vaisseau["cost_in_credits"]/10), vaisseau["max_atmosphering_speed"]))
+            self.shop.vaisseaux = vaisseaux
+
     def tri_planete(self, planetes:list[Planete]) -> list:
         """tri la liste de planete
 
@@ -155,3 +192,46 @@ class Gestion():
         for planete in self.planetes:
             if habite in planete.nom:
                 planete.occupants.append(self.personnages[len(self.personnages)])
+    
+    def charger_json(self) -> None:
+        with open("perso.json", "r", encoding="utf-8") as fichier:
+            donnees = json.load(fichier)
+
+            for perso in donnees:
+                self.personnages.append(Perso(perso["nom"], perso["groupe"], perso["race"], perso["pv"], [], self.shop.armurerie(perso["armure"])))
+                for arme in perso["armes"]:
+                    self.personnages[len(self.personnages) - 1].armes.append(self.shop.armurerie(arme))
+
+
+        with open("planetes.json", "r", encoding="utf-8") as fichier:
+            donnees = json.load(fichier)
+
+            for planete in donnees:
+                self.planetes.append(Planete(planete["name"], planete["orbital_period"], planete["detruit"]))
+                for habitant in self.planete["occupants"]:
+                    for perso in self.personnages:
+                        if habitant == perso.nom:
+                            self.planetes[len(self.planetes) - 1].append(perso)
+
+
+    def combattre(self) -> None:
+        play = True
+        enemies = [] 
+        for numero_membre in len(self.inventaire.equipage):
+            enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
+            
+        while play:
+            self.pp
+            
+            for aly in self.inventaire.equipage:
+
+            for enemie in enemies:
+                
+            if self.pp.pv == 0 :
+                print("GAME OVER")
+                play = False
+                mort = True
+
+        
+
+

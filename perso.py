@@ -64,13 +64,13 @@ class Perso():
             self.pv += self.armure.pv
             self.armure.pv = 0
 
-    def to_dick(self) -> dict:
+    def to_dick_uh_i_mean_dict(self) -> dict:
         """prépare le personnage pour le convertir en json 
 
         Returns:
             dict: les info du personnage en dict
         """
-        dick = {"nom": self.nom, "groupe": self.groupe, "race": self.race, "pv": self.pv, "armes": [], "armure": self.armure.nom, "force": self.force}
+        dick = {"nom": self.nom, "groupe": self.groupe, "race": self.race, "pv": self.pv, "armes": [], "armure": self.armure.nom}
         for arme in self.armes:
             dick["armes"].append(arme.nom)
         return dick

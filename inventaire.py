@@ -23,6 +23,8 @@ class Inventaire():
         self.vaisseau = vaisseau
         self.equipage = equipage
         self.nico = Nico()
+        self.nb_carotte = 5
+        self.nb_carburant = 31
 
         self.argent = argent
 
@@ -34,8 +36,10 @@ class Inventaire():
     def argent(self, argent) -> None:
         if argent >= 0:
             self._argent = argent
+        elif argent < 0 :
+            self._argent = 0
 
-    def to_dick(self) -> dict:
+    def to_dick_uh_i_mean_dict(self) -> dict:
         """prépare l'inventaire pour le convertir en json 
 
         Returns:
