@@ -23,8 +23,7 @@ class Vaisseau:
 
         espaces = 7 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
-
-
+    
     @property
     def prix(self) -> int:
         return self._prix
