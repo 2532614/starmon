@@ -214,6 +214,9 @@ class Gestion():
                             self.planetes[len(self.planetes) - 1].append(perso)
 
 
+
+
+
     def combattre(self) -> None:
         play = True
         enemies = [] 
@@ -221,11 +224,30 @@ class Gestion():
             enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
             
         while play:
-            self.pp
+            nb = 0
+            print("="*8)
+            print("VOTRE TOUR")
+            print("="*8)
+            print("")
+            for enemie in enemies:
+                print(f"{nb}. {enemie.nom}")
+                nb += 1
+            choix = input("quel adversaire attaquez vous?: ")
+            enemies[choix].subir_degats(self.pp.attaquer())
             
             for aly in self.inventaire.equipage:
+                nb_target = random.randint(0,len(enemies))
+                
+                enemies[nb_target].subir_degats(aly.attaquer())
+                if aly.nom == "grievious":
+                    nb_target = random.randint(0,len(enemies))
+                
+                    enemies[nb_target].subir_degats(aly.attaquer())
+
+
 
             for enemie in enemies:
+                pass
                 
             if self.pp.pv == 0 :
                 print("GAME OVER")
