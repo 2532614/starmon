@@ -217,12 +217,12 @@ class Gestion():
 
 
 
-    def combattre(self) -> None:
+def combattre(self) -> None:
         play = True
-        enemies = [] 
+        enemies = []
         for numero_membre in len(self.inventaire.equipage):
             enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
-            
+           
         while play:
             nb = 0
             print("="*8)
@@ -232,27 +232,59 @@ class Gestion():
             for enemie in enemies:
                 print(f"{nb}. {enemie.nom}")
                 nb += 1
-            choix = input("quel adversaire attaquez vous?: ")
-            enemies[choix].subir_degats(self.pp.attaquer())
-            
+                encore = True
+                while encore == True:
+                    try:
+                        choix = int(input("quel adversaire attaquez vous?: "))
+                        enemies[choix].subir_degats(self.pp.attaquer())
+                        encore = False
+
+
+                    except ValueError:
+                        print("valeur impossible")
+
+
+           
             for aly in self.inventaire.equipage:
+                print(f"{aly.nom} attaque")
                 nb_target = random.randint(0,len(enemies))
-                
+                print(f"il vise {enemies[nb_target].nom}")
+               
                 enemies[nb_target].subir_degats(aly.attaquer())
+                if enemies[nb_target].pv == 0 :
+                    print(f"{enemies[nb_target].nom} est mort")
+                else :
+                    print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+
+
                 if aly.nom == "grievious":
+                    print("grievious attaque une seconde fois")
+
+
                     nb_target = random.randint(0,len(enemies))
-                
+                    print(f"il vise {enemies[nb_target].nom}")
+               
                     enemies[nb_target].subir_degats(aly.attaquer())
+                    if enemies[nb_target].pv == 0 :
+                        print(f"{enemies[nb_target].nom} est mort")
+                        enemies[nb_target].pop
+
+
+                    else :
+                        print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+
+
+
 
 
 
             for enemie in enemies:
-                pass
-                
-            if self.pp.pv == 0 :
-                print("GAME OVER")
-                play = False
-                mort = True
+               
+               
+                if self.pp.pv == 0 :
+                    print("GAME OVER")
+                    play = False
+                    mort = True
 
         
 
