@@ -221,12 +221,19 @@ class Gestion():
                     self.personnages[len(self.personnages) - 1].armes.append(self.shop.armurerie(arme))
 
 
+
+
+
     def combattre(self) -> None:
             play = True
             enemies = []
             for numero_membre in len(self.inventaire.equipage):
                 enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
+<<<<<<< HEAD
            
+=======
+            
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
             while play:
                 nb = 0
                 print("="*8)
@@ -245,6 +252,7 @@ class Gestion():
                                 print(f"{enemies[nb_target].nom} est mort")
                                 enemies[nb_target].pop
                             encore = False
+<<<<<<< HEAD
  
  
                         except ValueError:
@@ -252,16 +260,30 @@ class Gestion():
  
  
            
+=======
+
+
+                        except ValueError:
+                            print("valeur impossible")
+
+
+            
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                 for aly in self.inventaire.equipage:
                     print(f"{aly.nom} attaque")
                     nb_target = random.randint(0,len(enemies))
                     print(f"il vise {enemies[nb_target].nom}")
+<<<<<<< HEAD
                
+=======
+                
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
                     else :
                         print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+<<<<<<< HEAD
  
  
                     if aly.nom == "grievious":
@@ -271,16 +293,36 @@ class Gestion():
                         nb_target = random.randint(0,len(enemies))
                         print(f"il vise {enemies[nb_target].nom}")
                
+=======
+
+
+                    if aly.nom == "grievious":
+                        print("grievious attaque une seconde fois")
+
+
+                        nb_target = random.randint(0,len(enemies))
+                        print(f"il vise {enemies[nb_target].nom}")
+                
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                         enemies[nb_target].subir_degats(aly.attaquer())
                         if enemies[nb_target].pv == 0 :
                             print(f"{enemies[nb_target].nom} est mort")
                             enemies[nb_target].pop
+<<<<<<< HEAD
  
  
                         else :
                             print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
  
  
+=======
+
+
+                        else :
+                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+
+
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                 for enemie in enemies:
                     print(f"{enemie.nom} attaque")
                     nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
@@ -288,7 +330,11 @@ class Gestion():
                         print(f"il vise {self.inventaire.equipage[nb_target].nom}")
                     except ValueError:
                         print("il vise Pépé")
+<<<<<<< HEAD
                
+=======
+                
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                     try:
                         self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
                         if self.inventaire.equipage[nb_target].pv == 0 :
@@ -301,14 +347,24 @@ class Gestion():
                             print(f"{self.pp.nom} est mort")
                         else :
                             print(f"{self.pp.nom} est a {self.pp.pv}")
+<<<<<<< HEAD
                
                
+=======
+                
+                
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
                     if self.pp.pv == 0 :
                         print("GAME OVER")
                         play = False
                         mort = True
+<<<<<<< HEAD
  
  
+=======
+
+
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
     def changer_arme(self)->None:
         print("="*8)
         print("CHANGEMENT D'ARME")
@@ -316,7 +372,11 @@ class Gestion():
         nb = 0
         for arme in self.inventaire.armes:
             print(f"{nb}.{arme}")
+<<<<<<< HEAD
             nb += 1
+=======
+            nb += 1 
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
         encore = True
         while encore:
             try:
@@ -325,10 +385,13 @@ class Gestion():
                 encore = False
             except ValueError:
                 print("choix invalide, recommencez")
+<<<<<<< HEAD
  
     def prime(self)-> None:
         print("="*8)
         print("CHANGEMENT D'ARME")
         print("="*8)
+=======
+>>>>>>> 77d9af8b01f16b47b67ab5bd7ff3410a4e9876b8
 
 
