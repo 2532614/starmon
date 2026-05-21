@@ -16,7 +16,7 @@ class Vaisseau:
         Returns:
             dict: un dictionnaire
         """
-        return {"nom": self.nom, "modele": self.modele, "prix": self.prix, "cargo": self.cargo, "vitesse": self.vitesse, "capacite_equipe": self.capacite_equipe}
+        return {"nom": self.nom, "modele": self.modele, "prix": self.prix, "vitesse": self.vitesse}
     
 
     def __str__(self)-> None:
