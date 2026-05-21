@@ -202,7 +202,6 @@ class Gestion():
                 for arme in perso["armes"]:
                     self.personnages[len(self.personnages) - 1].armes.append(self.shop.armurerie(arme))
 
-
         with open("planetes.json", "r", encoding="utf-8") as fichier:
             donnees = json.load(fichier)
 
@@ -213,25 +212,123 @@ class Gestion():
                         if habitant == perso.nom:
                             self.planetes[len(self.planetes) - 1].append(perso)
 
+        with open("perso.json", "r", encoding="utf-8") as fichier:
+            donnees = json.load(fichier)
+
+            for perso in donnees:
+                self.personnages.append(Perso(perso["nom"], perso["groupe"], perso["race"], perso["pv"], [], self.shop.armurerie(perso["armure"])))
+                for arme in perso["armes"]:
+                    self.personnages[len(self.personnages) - 1].armes.append(self.shop.armurerie(arme))
+
 
     def combattre(self) -> None:
-        play = True
-        enemies = [] 
-        for numero_membre in len(self.inventaire.equipage):
-            enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
-            
-        while play:
-            self.pp
-            
-            for aly in self.inventaire.equipage:
-
-            for enemie in enemies:
-                
-            if self.pp.pv == 0 :
-                print("GAME OVER")
-                play = False
-                mort = True
-
-        
+            play = True
+            enemies = []
+            for numero_membre in len(self.inventaire.equipage):
+                enemies.append(self.planete.occupants[random.randint(0, len(self.planete.occupants))])
+           
+            while play:
+                nb = 0
+                print("="*8)
+                print("VOTRE TOUR")
+                print("="*8)
+                print("")
+                for enemie in enemies:
+                    print(f"{nb}. {enemie.nom}")
+                    nb += 1
+                    encore = True
+                    while encore == True:
+                        try:
+                            choix = int(input("quel adversaire attaquez vous?: "))
+                            enemies[choix].subir_degats(self.pp.attaquer())
+                            if enemies[nb_target].pv == 0 :
+                                print(f"{enemies[nb_target].nom} est mort")
+                                enemies[nb_target].pop
+                            encore = False
+ 
+ 
+                        except ValueError:
+                            print("valeur impossible")
+ 
+ 
+           
+                for aly in self.inventaire.equipage:
+                    print(f"{aly.nom} attaque")
+                    nb_target = random.randint(0,len(enemies))
+                    print(f"il vise {enemies[nb_target].nom}")
+               
+                    enemies[nb_target].subir_degats(aly.attaquer())
+                    if enemies[nb_target].pv == 0 :
+                        print(f"{enemies[nb_target].nom} est mort")
+                    else :
+                        print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+ 
+ 
+                    if aly.nom == "grievious":
+                        print("grievious attaque une seconde fois")
+ 
+ 
+                        nb_target = random.randint(0,len(enemies))
+                        print(f"il vise {enemies[nb_target].nom}")
+               
+                        enemies[nb_target].subir_degats(aly.attaquer())
+                        if enemies[nb_target].pv == 0 :
+                            print(f"{enemies[nb_target].nom} est mort")
+                            enemies[nb_target].pop
+ 
+ 
+                        else :
+                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+ 
+ 
+                for enemie in enemies:
+                    print(f"{enemie.nom} attaque")
+                    nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                    try:
+                        print(f"il vise {self.inventaire.equipage[nb_target].nom}")
+                    except ValueError:
+                        print("il vise Pépé")
+               
+                    try:
+                        self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
+                        if self.inventaire.equipage[nb_target].pv == 0 :
+                            print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                        else :
+                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                    except ValueError:
+                        self.pp.subir_degats(enemie.attaquer())
+                        if self.pp.pv == 0 :
+                            print(f"{self.pp.nom} est mort")
+                        else :
+                            print(f"{self.pp.nom} est a {self.pp.pv}")
+               
+               
+                    if self.pp.pv == 0 :
+                        print("GAME OVER")
+                        play = False
+                        mort = True
+ 
+ 
+    def changer_arme(self)->None:
+        print("="*8)
+        print("CHANGEMENT D'ARME")
+        print("="*8)
+        nb = 0
+        for arme in self.inventaire.armes:
+            print(f"{nb}.{arme}")
+            nb += 1
+        encore = True
+        while encore:
+            try:
+                choix = int(input("quel arme  voulez vous equiper?: "))
+                self.pp.armes[1] = self.inventaire.armes[choix]
+                encore = False
+            except ValueError:
+                print("choix invalide, recommencez")
+ 
+    def prime(self)-> None:
+        print("="*8)
+        print("CHANGEMENT D'ARME")
+        print("="*8)
 
 
