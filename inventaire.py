@@ -54,3 +54,4 @@ class Inventaire():
             dick["equipage"].append(perso.nom)
 
         return dick
+    
