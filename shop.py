@@ -1,6 +1,7 @@
 from arme import Arme
 from armure import Armure
 from inventaire import Inventaire
+from vaisseau import Vaisseau
 import random
 
 class Shop():
@@ -82,8 +83,21 @@ class Shop():
         for armure in self.armures:
             if nom == armure.nom:
                 return armure
+            
+    def vaisseau_pp(self, nom:str, inventaire:Inventaire) -> None:
+        """prend le nom d'un vaisseau et met le vaisseau correspondant dans l'inventaire
 
-    def print_black_marcket(self)-> None:
+        Args:
+            nom (str): le nom du vaisseau à mettre dans l'invrentaire
+            inventaire (Inventaire): l'inventaire du pp
+        """
+        for vaisseau in self.vaisseaux:
+            if vaisseau.nom in nom:
+                inventaire.vaisseau = vaisseau.copy
+                if " (modifié)" in nom:
+                    inventaire.vaisseau.nom = f"{inventaire.vaisseau.nom} (modifié)"
+
+    def print_black_marcket(self) -> None:
         nb=0
 
         print("="*15)
@@ -209,7 +223,7 @@ class Shop():
                             if inventaire.argent >= self.parti_vaisseau[35 - choix2].prix:
                                 inventaire.argent - (random.randint(101, 111) / 100) * (self.parti_vaisseau[35 - choix2].prix)
                                 try :
-                                    inventaire.vaisseau.nom += " (modifié)"
+                                    inventaire.vaisseau.nom = f"{inventaire.vaisseau.nom} (modifié)"
                                 except:
                                     pass
                                 

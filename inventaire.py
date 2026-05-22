@@ -38,20 +38,4 @@ class Inventaire():
             self._argent = argent
         elif argent < 0 :
             self._argent = 0
-
-    def to_dick_uh_i_mean_dict(self) -> dict:
-        """prépare l'inventaire pour le convertir en json 
-
-        Returns:
-            dict: les info de l'inventaire  en dict
-        """
-        dick = {"armes": [], "armures": [], "argent": self.argent, "vaisseau": self.vaisseau.nom, "equpage": []}
-        for arme in self.armes:
-            dick["armes"].append(arme.nom)
-        for armure in self.armures:
-            dick["armures"].append(armure.nom)
-        for perso in self.equipage:
-            dick["equipage"].append(perso.nom)
-
-        return dick
     
