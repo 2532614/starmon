@@ -531,13 +531,15 @@ class Gestion():
                 print("choix invalide, recommencez")
 
     def cheat_code(self)->None:
-        self.inventaire.argent =  100000000000
-        self.pp.armes = #sabre laser ametiste si legite, eclair de force sinon
-        self.pp.armure = #armure mendalorienne
-        self.inventaire.equipage = [] #jabba, maul, grievious, vador
-        self.inventaire.vaisseau = #ton vaisseau pref
-        self.inventaire.nb_carburant = 10000000
-        self.inventaire.nb_carotte = 10000000
+        code = input("")
+        if code == "t-rn4_put3+s410p3":
+            self.inventaire.argent =  100000000000
+            self.pp.armes = #sabre laser ametiste si legite, eclair de force sinon
+            self.pp.armure = #armure mendalorienne
+            self.inventaire.equipage = [] #jabba, maul, grievious, vador
+            self.inventaire.vaisseau = #ton vaisseau pref
+            self.inventaire.nb_carburant = 10000000
+            self.inventaire.nb_carotte = 10000000
 
     def menu_principale()->None:
         
