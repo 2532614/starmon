@@ -47,21 +47,58 @@ class Inventaire():
             print("4. armures")
             print("5. vaisseau")
             print("6. consommable")
+            print("7. tout voir")
             choix = int(input("que voulez vous voir?: "))
             match choix:
                 case 1:
-                    pass
+                    print("="*8)
+                    print(f"vous avez {self.argent} credits")
+                    print("="*8)
                 case 2:
-                    pass
+                    print("="*8)
+                    print("votre équipage contient:")
+                    for x in self.equipage:
+                        print(x.nom)
+                    print("="*8)
                 case 3:
-
-                    pass
+                    print("="*8)
+                    for x in self.armes:
+                        print(f"{x.nom}: {x.damage} damage")
+                    print("="*8)
                 case 4:
-                    pass
+                    print("="*8)
+                    for x in self.armures:
+                        print(f"{x.nom}: {x.pv} point de vie restant")
+                    print("="*8)
                 case 5:
-
-                    pass
+                    print("="*8)
+                    print(f"vous voyager à bord du {self.vaisseau.nom}")
+                    print("="*8)
                 case 6:
+                    print("="*8)
+                    print(f"vous avez {self.nb_carotte} carottes et {self.nb_carburant} unités de carburant")
+                    print("="*8)
+                case 7:
+                    print("="*8)
+                    print(f"vous avez {self.argent} credits")
+                    print("="*8)
+                    print("votre équipage contient:")
+                    for x in self.equipage:
+                        print(x.nom)
+                    print("="*8)
+                    for x in self.armes:
+                        print(f"{x.nom}: {x.damage} damage")
+                    print("="*8)
+                    for x in self.armures:
+                        print(f"{x.nom}: {x.pv} point de vie restant")
+                    print("="*8)
+                    print(f"vous voyager à bord du {self.vaisseau.nom}")
+                    print("="*8)
+                    print(f"vous avez {self.nb_carotte} carottes et {self.nb_carburant} unités de carburant")
+                    print("="*8)
+                case _:
                     pass
 
+        except ValueError:
+            pass
 
