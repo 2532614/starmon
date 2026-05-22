@@ -88,7 +88,7 @@ class Shop():
         """prend le nom d'un vaisseau et met le vaisseau correspondant dans l'inventaire
 
         Args:
-            nom (str): le nom du vaisseau à mettre dans l'invrentaire
+            nom (str): le nom du vaisseau à mettre dans l'inventaire
             inventaire (Inventaire): l'inventaire du pp
         """
         for vaisseau in self.vaisseaux:
@@ -211,7 +211,7 @@ class Shop():
                         elif choix2 >23 and choix2 <= 32:
                             if inventaire.argent >= self.armures[23 - choix2].prix:
                                 inventaire.argent - (random.randint(101, 111) / 100) * (self.armures[23 - choix2].prix)
-                                inventaire.armures.append(self.armures[23 - choix2])
+                                inventaire.armures.append(self.armures[23 - choix2].copy)
                         elif choix2 >33 and choix2 <= 34:
                             if inventaire.argent >= self.consommable[33 - choix2].prix:
                                 inventaire.argent - (random.randint(101, 111) / 100) * (self.consommable[33 - choix2].prix)

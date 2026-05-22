@@ -277,91 +277,108 @@ class Gestion():
 
 
     def combattre(self) -> None:
-            play = True
-            enemies = []
-            boss = False
-            for numero_membre in len(self.inventaire.equipage):
-                while play:
-                    perso = self.planete.occupants[random.randint(0, len(self.planete.occupants))].copy
-                    if ("Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso) and boss:
-                        pass
-                    elif "Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso:
-                        boss = True
-                        play = False
-                    else:
-                        play = False
-                enemies.append(perso)
-                play = True
+        """permet de faire combattre
+        """
+        play = True
+        enemies = []
+        boss = False
+        for numero_membre in len(self.inventaire.equipage):
             while play:
-                nb = 0
-                print("="*8)
-                print("VOTRE TOUR")
-                print("="*8)
-                print("")
-                print("")
-                print("1. attaquer")
-                print("2. attraper")
-                print("3. fuir")
+                perso = self.planete.occupants[random.randint(0, len(self.planete.occupants))].copy
+                if ("Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso) and boss:
+                    pass
+                elif "Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso:
+                    boss = True
+                    play = False
+                else:
+                    play = False
+            enemies.append(perso)
+            play = True
+        while play:
+            nb = 0
+            print("="*8)
+            print("VOTRE TOUR")
+            print("="*8)
+            print("")
+            print("")
+            print("1. attaquer")
+            print("2. attraper")
+            print("3. fuir")
 
-                again = True
-                while again:
-                    try:
-                        choix = int(input("que voulez vous faire?: "))
-                        match choix:
-                            case 1:
+            again = True
+            while again:
+                try:
+                    choix = int(input("que voulez vous faire?: "))
+                    match choix:
+                        case 1:
 
-                                for enemie in enemies:
-                                    print(f"{nb}. {enemie.nom}")
-                                    nb += 1
-                                    encore = True
-                                    while encore == True:
-                                        try:
-                                            choix = int(input("quel adversaire attaquez vous?: "))
-                                            enemies[choix].subir_degats(self.pp.attaquer())
-                                            if enemies[nb_target].pv == 0 :
-                                                print(f"{enemies[nb_target].nom} est mort")
-                                                if enemies[nb_target].pop in self.prime["nom"]:
-                                                    money = random.randint(5000, 15000)
-                                                    print("++++++++")
-                                                    print(f"prime reçu: {money}")
-                                                    print("++++++++")
-                                                    self.inventaire.argent += money
-                                            else:
-                                                print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
-                                            encore = False
-                
-                
-                                        except ValueError:
-                                            print("valeur impossible")
+                            for enemie in enemies:
+                                print(f"{nb}. {enemie.nom}")
+                                nb += 1
+                                encore = True
+                                while encore == True:
+                                    try:
+                                        choix = int(input("quel adversaire attaquez vous?: "))
+                                        enemies[choix].subir_degats(self.pp.attaquer())
+                                        if enemies[nb_target].pv == 0 :
+                                            print(f"{enemies[nb_target].nom} est mort")
+                                            if enemies[nb_target].pop in self.prime["nom"]:
+                                                money = random.randint(5000, 15000)
+                                                print("++++++++")
+                                                print(f"prime reçu: {money}")
+                                                print("++++++++")
+                                                self.inventaire.argent += money
+                                        else:
+                                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+                                        encore = False
+            
+            
+                                    except ValueError:
+                                        print("valeur impossible")
 
-                            case 2 :
-                                print("vous essayez de recruter un adversaire")
-                                for enemie in enemies:
-                                    print(f"{nb}. {enemie.nom}")
-                                    nb += 1
-                                choix = int(input("qui est la cible?: "))
-                                if enemies[choix].pv < random.randint(10, 45):
-                                    if len(self.inventaire.equipage) >= 3:
-                                        self.inventaire.equipage.append(enemies[choix].copy)
-                                        print(f"vous avez recruté {enemies[choix].nom}, il fait maintenant partie de votre equipe")
-                                        play = False
+                        case 2 :
+                            print("vous essayez de recruter un adversaire")
+                            for enemie in enemies:
+                                print(f"{nb}. {enemie.nom}")
+                                nb += 1
+                            choix = int(input("qui est la cible?: "))
+                            if enemies[choix].pv < random.randint(10, 45):
+                                if len(self.inventaire.equipage) >= 3:
+                                    self.inventaire.equipage.append(enemies[choix].copy)
+                                    print(f"vous avez recruté {enemies[choix].nom}, il fait maintenant partie de votre equipe")
+                                    play = False
 
-                            case 3:
-                                print("vous prenez la fuite")
-                                play = False
-                    except ValueError:
-                        print("ceci n'est pas une option")
+                        case 3:
+                            print("vous prenez la fuite")
+                            play = False
+                except ValueError:
+                    print("ceci n'est pas une option")
+
+            for aly in self.inventaire.equipage:
+                print(f"{aly.nom} attaque")
+                nb_target = random.randint(0,len(enemies))
+                print(f"il vise {enemies[nb_target].nom}")
+            
+                enemies[nb_target].subir_degats(aly.attaquer())
+                if enemies[nb_target].pv == 0 :
+                    print(f"{enemies[nb_target].nom} est mort")
+                    if enemies[nb_target].pop in self.prime["nom"]:
+                        money = random.randint(5000, 15000)
+                        print("++++++++")
+                        print(f"prime reçu: {money}")
+                        print("++++++++")
+                        self.inventaire.argent += money
+                else :
+                    print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
 
 
+                if aly.nom == "grievious":
+                    print("grievious attaque une seconde fois")
 
- 
- 
-           
-                for aly in self.inventaire.equipage:
-                    print(f"{aly.nom} attaque")
+
                     nb_target = random.randint(0,len(enemies))
                     print(f"il vise {enemies[nb_target].nom}")
-               
+            
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
@@ -371,64 +388,71 @@ class Gestion():
                             print(f"prime reçu: {money}")
                             print("++++++++")
                             self.inventaire.argent += money
+
                     else :
                         print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
- 
- 
-                    if aly.nom == "grievious":
-                        print("grievious attaque une seconde fois")
- 
- 
-                        nb_target = random.randint(0,len(enemies))
-                        print(f"il vise {enemies[nb_target].nom}")
-               
-                        enemies[nb_target].subir_degats(aly.attaquer())
-                        if enemies[nb_target].pv == 0 :
-                            print(f"{enemies[nb_target].nom} est mort")
-                            if enemies[nb_target].pop in self.prime["nom"]:
-                                money = random.randint(5000, 15000)
-                                print("++++++++")
-                                print(f"prime reçu: {money}")
-                                print("++++++++")
-                                self.inventaire.argent += money
 
-                        else :
-                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
- 
- 
-                for enemie in enemies:
-                    print(f"{enemie.nom} attaque")
+
+            for enemie in enemies:
+                print(f"{enemie.nom} attaque")
+                nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                try:
+                    print(f"il vise {self.inventaire.equipage[nb_target].nom}")
+                except IndexError:
+                    print("il vise Pépé")
+            
+                try:
+                    self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
+                    if self.inventaire.equipage[nb_target].pv == 0 :
+                        print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                    else :
+                        print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                except IndexError:
+                    self.pp.subir_degats(enemie.attaquer())
+                    if self.pp.pv == 0 :
+                        print(f"{self.pp.nom} est mort")
+                    else :
+                        print(f"{self.pp.nom} est a {self.pp.pv}")
+            
+            
+                if self.pp.pv == 0 :
+                    print("GAME OVER")
+                    play = False
+                    mort = True
+
+                if aly.nom == "grievious":
+                    print("grievious attaque une seconde fois")
+                        
                     nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
                     try:
                         print(f"il vise {self.inventaire.equipage[nb_target].nom}")
-                    except ValueError:
+                    except IndexError:
                         print("il vise Pépé")
-               
+            
                     try:
                         self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
                         if self.inventaire.equipage[nb_target].pv == 0 :
                             print(f"{self.inventaire.equipage[nb_target].nom} est mort")
                         else :
                             print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
-                    except ValueError:
+                    except IndexError:
                         self.pp.subir_degats(enemie.attaquer())
                         if self.pp.pv == 0 :
                             print(f"{self.pp.nom} est mort")
                         else :
                             print(f"{self.pp.nom} est a {self.pp.pv}")
-               
-               
+            
+            
                     if self.pp.pv == 0 :
                         print("GAME OVER")
                         play = False
                         mort = True
  
-                    if aly.nom == "grievious":
-                        print("grievious attaque une seconde fois")
- 
  
  
     def changer_arme(self)->None:
+        """permet de changer d'arme
+        """
         print("="*8)
         print("CHANGEMENT D'ARME")
         print("="*8)
@@ -445,7 +469,9 @@ class Gestion():
             except ValueError:
                 print("choix invalide, recommencez")
  
-    def prime(self)-> Perso:
+    def prime(self)-> None:
+        """permete de generer une prime
+        """
         print("="*8)
         print("cantina")
         print("="*8)
@@ -474,6 +500,46 @@ class Gestion():
         elif choix == 3:
             print(f"la prime pour {prime3} a été accepter")
             self.primes.append({"planete" : planete3, "perso" : prime3})
+
+
+    def voir_prime(self)-> None:
+        """permet de voir les primes en cours
+        """
+        for prime in self.primes:
+            print(f"vous avez accepter une prime pour {prime["perso"]} sur la planete {prime["planete"]}")
+
+
+    def voyager(self)-> None:
+        pass
+
+    def changer_armures(self)->None:
+
+        print("="*8)
+        print("CHANGEMENT D'ARMURE")
+        print("="*8)
+        nb = 0
+        for armure in self.inventaire.armures:
+            print(f"{nb}.{armure}")
+            nb += 1
+        encore = True
+        while encore:
+            try:
+                choix = int(input("quel armure  voulez vous equiper?: "))
+                self.pp.armure[1] = self.inventaire.armures[choix]
+                encore = False
+            except ValueError:
+                print("choix invalide, recommencez")
+
+    def cheat_code(self)->None:
+        self.inventaire.argent =  100000000000
+        self.pp.armes = #sabre laser ametiste si legite, eclair de force sinon
+        self.pp.armure = #armure mendalorienne
+        self.inventaire.equipage = [] #jabba, maul, grievious, vador
+        self.inventaire.vaisseau = #ton vaisseau pref
+        self.inventaire.nb_carburant = 10000000
+        self.inventaire.nb_carotte = 10000000
+        
+
 
 
         

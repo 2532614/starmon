@@ -37,4 +37,7 @@ class Planete:
         if co >= -1:
             self._co = co
 
+    def __str__(self):
+        return self.nom
+
 
