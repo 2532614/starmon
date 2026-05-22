@@ -6,3 +6,5 @@ from perso import Perso
 from planete import Planete
 from shop import Shop
 from vaisseau import Vaisseau
+
+

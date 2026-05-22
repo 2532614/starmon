@@ -8,9 +8,9 @@ from shop import Shop
 import requests
 import random
 import json
-
+ 
 "t-rn4_put3+s410p3"
-
+ 
 class Gestion():
     """gère le programe
     """
@@ -22,17 +22,17 @@ class Gestion():
         self.inventaire = Inventaire([], [], 0, "", [])
         self.shop = Shop()
         self.primes = []
-
+ 
         self.planetes = []
         self.planete = ""
-    
+   
     def call_apis(self) -> None:
         """appel des apis
         """
         try:
             self.charger_json()
         except FileNotFoundError:
-
+ 
             dragon_request = requests.Session().get("https://swapi.info/api/planets").json()
             for planete in dragon_request:
                 if planete["name"] == "Mustafar":
@@ -42,18 +42,18 @@ class Gestion():
             self.planetes = self.tri_planete(self.planetes)
             if "coruscant" == planete["name"]:
                  Planete(planete["name"], -1)
-            
+           
             planete = mustafar
             for position in range(8):
                 self.planetes[50+position], planete = planete, self.planetes[50+position]
             self.planetes.append(planete)
             self.planetes.append(Planete("Death Star", 0, False))
-
+ 
             co = 0
             for id_planete in (61):
                 self.planetes[id_planete].co = co
                 co += 31
-
+ 
             dragon_request = requests.Session().get("https://akabab.github.io/starwars-api/api/all.json").json()
             for perso in dragon_request:
                 if "Jabba Desilijic Tiure" in perso["name"]:
@@ -163,63 +163,63 @@ class Gestion():
 
     def tri_planete(self, planetes:list[Planete]) -> list:
         """tri la liste de planete
-
+ 
         Args:
             planetes (list[Planete]): la liste de planete non trier
-
+ 
         Returns:
             list: la  liste de planete trier
         """
         lst_a_trier:list[Planete] = planetes.copy
-        
+       
         if len(lst_a_trier) <= 1:
             return lst_a_trier
-        
+       
         pivot = lst_a_trier[len(lst_a_trier) - 1]
-
+ 
         petit = []
         grand = []
-
+ 
         for num_plan in range(len(lst_a_trier)-1):
             if lst_a_trier[num_plan].co < pivot.co:
                 petit.append(lst_a_trier[num_plan])
             else:
                 grand.append(lst_a_trier[num_plan])
-
+ 
                 return self.tri_planete(petit) + [pivot] + self.tri_planete(grand)
-            
+           
     def habitant(self, habite:str) -> None:
         """assigne les personnage à leur planetes respective
-
+ 
         Args:
             habite (str): la planete en question
         """
         for planete in self.planetes:
             if habite in planete.nom:
                 planete.occupants.append(self.personnages[len(self.personnages)])
-    
+   
     def charger_json(self) -> None:
         with open("perso.json", "r", encoding="utf-8") as fichier:
             donnees = json.load(fichier)
-
+ 
             for perso in donnees:
                 self.personnages.append(Perso(perso["nom"], perso["groupe"], perso["race"], perso["pv"], [], self.shop.armurerie(perso["armure"])))
                 for arme in perso["armes"]:
                     self.personnages[len(self.personnages) - 1].armes.append(self.shop.armurerie(arme))
-
+ 
         with open("planetes.json", "r", encoding="utf-8") as fichier:
             donnees = json.load(fichier)
-
+ 
             for planete in donnees:
                 self.planetes.append(Planete(planete["name"], planete["orbital_period"], planete["detruit"]))
                 for habitant in self.planete["occupants"]:
                     for perso in self.personnages:
                         if habitant == perso.nom:
                             self.planetes[len(self.planetes) - 1].append(perso)
-
+ 
         with open("vaisseaux.json", "r", encoding="utf-8") as fichier:
             donnees = json.load(fichier)
-
+ 
             for vaisseau in donnees:
                 self.shop.vaisseaux.append(Vaisseau(vaisseau["nom"], vaisseau["modele"], vaisseau["prix"],vaisseau["vitesse"]))
         
@@ -280,7 +280,7 @@ class Gestion():
             play = True
             enemies = []
             boss = False
-            for numero_membre in range(len(self.inventaire.equipage) + 1):
+            for numero_membre in len(self.inventaire.equipage):
                 while play:
                     perso = self.planete.occupants[random.randint(0, len(self.planete.occupants))].copy
                     if ("Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso) and boss:
@@ -298,22 +298,56 @@ class Gestion():
                 print("VOTRE TOUR")
                 print("="*8)
                 print("")
-                for enemie in enemies:
-                    print(f"{nb}. {enemie.nom}")
-                    nb += 1
-                    encore = True
-                    while encore == True:
-                        try:
-                            choix = int(input("quel adversaire attaquez vous?: "))
-                            enemies[choix].subir_degats(self.pp.attaquer())
-                            if enemies[nb_target].pv == 0 :
-                                print(f"{enemies[nb_target].nom} est mort")
-                                enemies[nb_target].pop
-                            encore = False
- 
- 
-                        except ValueError:
-                            print("valeur impossible")
+                print("")
+                print("1. attaquer")
+                print("2. attraper")
+                print("3. fuir")
+
+                again = True
+                while again:
+                    try:
+                        choix = int(input("que voulez vous faire?: "))
+                        match choix:
+                            case 1:
+
+                                for enemie in enemies:
+                                    print(f"{nb}. {enemie.nom}")
+                                    nb += 1
+                                    encore = True
+                                    while encore == True:
+                                        try:
+                                            choix = int(input("quel adversaire attaquez vous?: "))
+                                            enemies[choix].subir_degats(self.pp.attaquer())
+                                            if enemies[nb_target].pv == 0 :
+                                                print(f"{enemies[nb_target].nom} est mort")
+                                                enemies[nb_target].pop
+                                            else:
+                                                print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+                                            encore = False
+                
+                
+                                        except ValueError:
+                                            print("valeur impossible")
+
+                            case 2 :
+                                print("vous essayez de recruter un adversaire")
+                                for enemie in enemies:
+                                    print(f"{nb}. {enemie.nom}")
+                                    nb += 1
+                                choix = int(input("qui est la cible?: "))
+                                if enemies[choix].pv < random.randint(10, 45):
+                                    if len(self.inventaire.equipage) >= 3:
+                                        self.inventaire.equipage.append(enemies[choix].copy)
+                                        play = False
+
+                            case 3:
+                                print("vous prenez la fuite")
+                                play = False
+                    except ValueError:
+                        print("ceci n'est pas une option")
+
+
+
  
  
            
@@ -423,5 +457,7 @@ class Gestion():
         elif choix == 3:
             print(f"la prime pour {prime3} a été accepter")
             self.primes.append({"planete" : planete3, "perso" : prime3})
- 
+
+
+        
 
