@@ -538,6 +538,8 @@ class Gestion():
         self.inventaire.vaisseau = #ton vaisseau pref
         self.inventaire.nb_carburant = 10000000
         self.inventaire.nb_carotte = 10000000
+
+    def menu_principale()->None:
         
 
 
