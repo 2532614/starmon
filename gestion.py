@@ -320,7 +320,12 @@ class Gestion():
                                             enemies[choix].subir_degats(self.pp.attaquer())
                                             if enemies[nb_target].pv == 0 :
                                                 print(f"{enemies[nb_target].nom} est mort")
-                                                enemies[nb_target].pop
+                                                if enemies[nb_target].pop in self.prime["nom"]:
+                                                    money = random.randint(5000, 15000)
+                                                    print("++++++++")
+                                                    print(f"prime reçu: {money}")
+                                                    print("++++++++")
+                                                    self.inventaire.argent += money
                                             else:
                                                 print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
                                             encore = False
@@ -338,6 +343,7 @@ class Gestion():
                                 if enemies[choix].pv < random.randint(10, 45):
                                     if len(self.inventaire.equipage) >= 3:
                                         self.inventaire.equipage.append(enemies[choix].copy)
+                                        print(f"vous avez recruté {enemies[choix].nom}, il fait maintenant partie de votre equipe")
                                         play = False
 
                             case 3:
@@ -359,6 +365,12 @@ class Gestion():
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
+                        if enemies[nb_target].pop in self.prime["nom"]:
+                            money = random.randint(5000, 15000)
+                            print("++++++++")
+                            print(f"prime reçu: {money}")
+                            print("++++++++")
+                            self.inventaire.argent += money
                     else :
                         print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
  
@@ -373,8 +385,13 @@ class Gestion():
                         enemies[nb_target].subir_degats(aly.attaquer())
                         if enemies[nb_target].pv == 0 :
                             print(f"{enemies[nb_target].nom} est mort")
-                            enemies[nb_target].pop
- 
+                            if enemies[nb_target].pop in self.prime["nom"]:
+                                money = random.randint(5000, 15000)
+                                print("++++++++")
+                                print(f"prime reçu: {money}")
+                                print("++++++++")
+                                self.inventaire.argent += money
+
                         else :
                             print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
  
