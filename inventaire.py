@@ -39,3 +39,29 @@ class Inventaire():
         elif argent < 0 :
             self._argent = 0
     
+    def voir_inventaire(self)->None:
+        try:
+            print("1. argent")
+            print("2. equipage")
+            print("3. armes")
+            print("4. armures")
+            print("5. vaisseau")
+            print("6. consommable")
+            choix = int(input("que voulez vous voir?: "))
+            match choix:
+                case 1:
+                    pass
+                case 2:
+                    pass
+                case 3:
+
+                    pass
+                case 4:
+                    pass
+                case 5:
+
+                    pass
+                case 6:
+                    pass
+
+
