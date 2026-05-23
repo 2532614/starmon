@@ -8,6 +8,7 @@ from shop import Shop
 import requests
 import random
 import json
+import pygame
  
 "t-rn4_put3+s410p3"
  
@@ -536,7 +537,7 @@ class Gestion():
             self.inventaire.argent =  100000000000
             self.pp.armes = #sabre laser ametiste si legite, eclair de force sinon
             self.pp.armure = #armure mendalorienne
-            self.inventaire.equipage = [] #jabba, maul, grievious, vador
+            self.inventaire.equipage = [] #jabba, maul, grievious, vader
             self.inventaire.vaisseau = #ton vaisseau pref
             self.inventaire.nb_carburant = 10000000
             self.inventaire.nb_carotte = 10000000
