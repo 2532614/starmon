@@ -180,12 +180,12 @@ class Shop():
                         if choix2 >= 0 and choix2 <= 36:
                         
                             if inventaire.argent >= self.vaisseaux[choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.vaisseaux[choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.vaisseaux[choix2].prix), False, True)
                                 inventaire.vaisseau = self.vaisseaux[choix2].copy
                         elif choix2 >37 and choix2 <= 38:
                             
                                 if inventaire.argent >= self.consommable[37 - choix2].prix:
-                                    inventaire.argent - (random.randint(101, 111) / 100) * (self.consommable[37 - choix2].prix)
+                                    inventaire.spent((random.randint(101, 111) / 100) * (self.consommable[37 - choix2].prix), False, True)
                                 if choix2 == 33 : 
                                     inventaire.nb_carotte = self.consommable[37 - choix2]
                                 elif choix2 == 34:
@@ -206,22 +206,22 @@ class Shop():
                         choix2 = int(input("que voulez vous acheter?(uniquelement le #): "))
                         if choix2 >= 0 and choix2 <= 22:
                             if inventaire.argent >= self.armes[choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.armes[choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.armes[choix2].prix), True, False)
                                 inventaire.armes.append(self.armes[choix2])
                         elif choix2 >23 and choix2 <= 32:
                             if inventaire.argent >= self.armures[23 - choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.armures[23 - choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.armures[23 - choix2].prix), True, False)
                                 inventaire.armures.append(self.armures[23 - choix2].copy)
                         elif choix2 >33 and choix2 <= 34:
                             if inventaire.argent >= self.consommable[33 - choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.consommable[33 - choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.consommable[33 - choix2].prix), True, False)
                                 if choix2 == 33 : 
                                     inventaire.nb_carotte += self.consommable[33 - choix2]
                                 elif choix2 == 34:
                                     inventaire.nb_carburant += self.consommable[33 - choix2]
                         elif choix2 >35 and choix2 <= 38:
                             if inventaire.argent >= self.parti_vaisseau[35 - choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.parti_vaisseau[35 - choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.parti_vaisseau[35 - choix2].prix), True, False)
                                 try :
                                     inventaire.vaisseau.nom = f"{inventaire.vaisseau.nom} (modifié)"
                                 except:
@@ -229,7 +229,7 @@ class Shop():
                                 
                         elif choix2 >39 and choix2 <= 75 :
                             if inventaire.argent >= self.vaisseaux[39 - choix2].prix:
-                                inventaire.argent - (random.randint(101, 111) / 100) * (self.vaisseaux[39 - choix2].prix)
+                                inventaire.spent((random.randint(101, 111) / 100) * (self.vaisseaux[39 - choix2].prix), True, False)
                                 inventaire.vaisseau = self.vaisseaux[39 - choix2].copy
                         elif choix2 == 76:
                             pass

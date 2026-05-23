@@ -6,6 +6,7 @@ from inventaire import Inventaire
 from perso import Perso
 from shop import Shop
 from images import image
+import matplotlib.pyplot as plt
 import requests
 import random
 import json
@@ -41,7 +42,13 @@ class Gestion():
                 if planete["name"] == "Mustafar":
                     mustafar = Planete(planete["name"], planete["orbital_period"], False)
                 else:
-                    self.planetes.append(Planete(planete["name"], planete["orbital_period"], False))
+                    self.planetes.append(Planete(planete["name"], (planete["orbital_period"]), False))
+            orb = 1
+            for planete in self.planete:
+                if planete.co == "unknown":
+                    planete.co == orb
+                    orb += 1
+                planete.co = int(planete.co)
             self.planetes = self.tri_planete(self.planetes)
             if "Coruscant" == planete["name"]:
                  Planete(planete["name"], -1)
@@ -89,10 +96,10 @@ class Gestion():
                     self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("zap")), self.shop.armurerie("none")))
                     self.habitant(perso["homeworld"])
                 elif "wookiee" in perso["species"]:
-                    self.personnages.append(Perso(perso["name"], "wookie", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("arbalete laser(cool)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Wookie", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("arbalete laser(cool)")), self.shop.armurerie("none")))
                     self.habitant(perso["homeworld"])
                 elif "Squadron" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "colored Squadron", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Colored Squadron", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
                     self.habitant(perso["homeworld"])
                 elif "New Republic" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
@@ -255,6 +262,10 @@ class Gestion():
             for planete in self.planetes:
                 if donnees[4] == planete.nom:
                     self.planete = planete
+            self.inventaire.money = donnees[5]
+            self.inventaire.mark = donnees[6]
+            self.inventaire.black = donnees[7]
+            self.inventaire.transactions = donnees[8]
                 
     def enregistrer_json(self) -> None:
         lst_dict = []
@@ -277,7 +288,7 @@ class Gestion():
             lst_dict.append(perso.to_dick_uh_i_mean_dict())
         with open("team.json", "w", encoding="utf-8") as fichier:
             json.dump(lst_dict, fichier, indent=4)
-        lst_dict = [self.inventaire.argent, self.inventaire.vaisseau.nom, self.inventaire.nb_carotte, self.inventaire.nb_carburant, self.planete.nom]
+        lst_dict = [self.inventaire.argent, self.inventaire.vaisseau.nom, self.inventaire.nb_carotte, self.inventaire.nb_carburant, self.planete.nom, self.inventaire.money, self.inventaire.mark, self.inventaire.black, self.inventaire.transactions]
         with open("inventaire.json", "w", encoding="utf-8") as fichier:
             json.dump(lst_dict, fichier, indent=4)
 
@@ -636,6 +647,161 @@ class Gestion():
         if detruit == 0 :
             print("aucune planete detruite")
 
+    def pie_chart(self):
+        detruit = 0
+        safe = 0
+        for planete in self.planetes:
+            if planete.detruit:
+                detruit += 1
+            else:
+                safe += 1
+        donnees = [safe, detruit]
+        boom = ['planetes en vie', 'planetes détruites']
+        colors = [(0, .5, 1), (0.5, 0, 0)]
 
+        plt.pie(donnees, labels=boom, colors=colors, autopct = "%1.2f%%", startangle=90,)
+
+        # Display the plot
+        plt.show()
         
+    def line_chart(self) -> None:
+        """fait un graph avec les dépenses et l'argent
+        """
+        plt.cla()
+        plt.plot(self.inventaire.transactions, self.inventaire.mark, label="market", color=(0, 1, 1), linestyle="-")
+        plt.plot(self.inventaire.transactions, self.inventaire.black, label="black market", color=(0.4, 0, 0.6), linestyle="-")
+        plt.plot(self.inventaire.transactions, self.inventaire.money, label="argent", color=(1, 1, 0), linestyle="-")
 
+        plt.xlabel("transaction")
+        plt.ylabel("argent")
+        plt.title("argent posséder et total au fil des transactions")
+        plt.legend()
+        plt.show()
+
+    def stats(self) -> None:
+        insultes = 0
+        for insulte in self.inventaire.nico.to_dick_uh_i_mean_dict:
+            insultes += 1
+        print(f"nos insultes envers nico au cours du projet: {insultes}")
+
+        print("")
+
+        vaisseau_rapide = self.tri_vaisseaux
+        print("----------------------------------------------------------------------------------------------------")
+        print("les 10 vaisseaux les plus rapide:")
+        for rapide in range(10):
+            print(f"{rapide + 1}. {vaisseau_rapide[rapide].nom}, vitesse: {vaisseau_rapide[rapide].vitesse}")
+        print("----------------------------------------------------------------------------------------------------")
+        print("")
+        print("----------------------------------------------------------------------------------------------------")
+        print("définir le nombre de presonnes par groupe:")
+        print("1. Sith")
+        print("2. Jedi")
+        print("3. Droid")
+        print("4. Wookie")
+        print("5. Colored Squadron")
+        print("6. New Republic")
+        print("7. Resistance")
+        print("8. Galactic Republic")
+        print("9. Hutt clan")
+        choix = input("choisissez un goupe: ")
+        print("")
+        nb = 0
+        match choix:
+            case "1":
+                for perso in self.personnages:
+                    if "Sith" in perso.groupe:
+                        nb += 1
+            case "2":
+                for perso in self.personnages:
+                    if "Jedi" in perso.groupe:
+                        nb += 1
+            case "3":
+                for perso in self.personnages:
+                    if "Droid" in perso.groupe:
+                        nb += 1
+            case "4":
+                for perso in self.personnages:
+                    if "Wookie" in perso.groupe:
+                        nb += 1
+            case "5":
+                for perso in self.personnages:
+                    if "Colored Squadron" in perso.groupe:
+                        nb += 1
+            case "6":
+                for perso in self.personnages:
+                    if "New Republic" in perso.groupe:
+                        nb += 1
+            case "7":
+                for perso in self.personnages:
+                    if "Resistance" in perso.groupe:
+                        nb += 1
+            case "8":
+                for perso in self.personnages:
+                    if "Galactic Republic" in perso.groupe:
+                        nb += 1
+            case "9":
+                for perso in self.personnages:
+                    if "Hutt clan" in perso.groupe:
+                        nb += 1
+        print(f"il y a {nb} pesonnes dans ce groupe")
+        print("----------------------------------------------------------------------------------------------------")
+        print("")
+        print("----------------------------------------------------------------------------------------------------")
+        nb = 0
+        for planete in self.planetes:
+            nb += len(planete.habitants)
+
+        print(f"la moyenne de personnes par planête est de {nb / 61} personnes")
+
+        print("----------------------------------------------------------------------------------------------------")
+
+
+    def tri_vaisseaux(self) -> list:
+        """tri la liste de vaisseau selon la vitesse
+ 
+        Args:
+            planetes (list[Planete]): la liste de planete non trier
+ 
+        Returns:
+            list: la  liste de vaisseaux trier
+        """
+        lst_a_trier:list[Planete] = self.shop.vaisseaux.copy
+       
+        if len(lst_a_trier) <= 1:
+            return lst_a_trier
+       
+        pivot = lst_a_trier[len(lst_a_trier) - 1]
+ 
+        petit = []
+        grand = []
+ 
+        for num_vaisseau in range(len(lst_a_trier)-1):
+            if lst_a_trier[num_vaisseau].vitesse < pivot.vitesse:
+                petit.append(lst_a_trier[num_vaisseau])
+            else:
+                grand.append(lst_a_trier[num_vaisseau])
+ 
+                return self.tri_planete(grand) + [pivot] + self.tri_planete(petit)
+            
+    def recherche_dicoto(self, coordonnées:int) -> str:
+        planetes = self.planetes.copy
+        gap = int((len(planetes) - 1)/2)
+        pivot = gap
+        planete = planetes[pivot]
+        while True :
+            if (planete.co - 15) < coordonnées < (planete.co + 15):
+                return planete.nom
+            elif planete.co > coordonnées:
+                gap = int(gap / 2)
+                pivot += gap
+                planete = planetes[pivot]
+            elif planete.co > coordonnées:
+                gap = int(gap / 2)
+                pivot -= gap
+                planete = planetes[pivot]
+
+    def recherche_nom(self, nom:str) -> int:
+        for planete in self.planete:
+            if planete.nom == nom:
+                return planete.co

@@ -25,6 +25,11 @@ class Inventaire():
         self.nico = Nico()
         self.nb_carotte = 5
         self.nb_carburant = 31
+        self.transactions = [0]
+        self.mark = [0]
+        self.black = [0]
+        self.money = [0]
+        
 
         self.argent = argent
 
@@ -100,5 +105,20 @@ class Inventaire():
                     pass
 
         except ValueError:
-            pass
+            print("valeur in valide")
 
+    def spend(self, argent:int, black:bool, mark:bool) -> None:
+        if self.agrent < argent:
+            argent = self.argent
+        self.argent -= argent
+        self.transactions.append(self.transaction[len(self.transaction) - 1] + 1)
+        self.money.append(self.argent)
+        if black:
+            self.black.append(self.black[len(self.black) - 1] + argent)
+            self.black.append(self.black[len(self.black) - 1])
+        elif mark:
+            self.mark.append(self.mark[len(self.mark) - 1] + argent)
+            self.mark.append(self.mark[len(self.mark) - 1])
+        else:
+            self.black.append(self.black[len(self.black) - 1])
+            self.mark.append(self.mark[len(self.mark) - 1])
