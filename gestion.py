@@ -8,7 +8,7 @@ from shop import Shop
 import requests
 import random
 import json
-import pygame
+
  
 "t-rn4_put3+s410p3"
  
@@ -18,10 +18,10 @@ class Gestion():
     def __init__(self) -> None:
         """decole la gestion du programme
         """
+        self.shop = Shop()
         self.pp = Perso("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
         self.inventaire = Inventaire([], [], 0, "", [])
-        self.shop = Shop()
         self.primes = []
  
         self.planetes = []
@@ -126,6 +126,9 @@ class Gestion():
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
                         self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
+                self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)"), self.shop.armurerie("blaster DC17", "blaster(pas cool)")), self.shop.armurerie("none")))
+                for id_planete in range(61):
+                    self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
 
 
             dragon_request = requests.Session().get("swapi.info/api/starships").json()
@@ -159,7 +162,7 @@ class Gestion():
                     vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], int(vaisseau["cost_in_credits"]/10), vaisseau["max_atmosphering_speed"]))
                 self.shop.vaisseaux = vaisseaux
         
-        self.planete = self.planetes[1]
+            self.planete = self.planetes[1]
 
 
     def tri_planete(self, planetes:list[Planete]) -> list:
@@ -277,7 +280,7 @@ class Gestion():
             json.dump(lst_dict, fichier, indent=4)
 
 
-    def combattre(self) -> None:
+    def combattre(self) -> bool:
         """permet de faire combattre
         """
         play = True
@@ -420,6 +423,7 @@ class Gestion():
                     print("GAME OVER")
                     play = False
                     mort = True
+                    return mort
 
                 if aly.nom == "grievious":
                     print("grievious attaque une seconde fois")
@@ -448,6 +452,7 @@ class Gestion():
                         print("GAME OVER")
                         play = False
                         mort = True
+                        return mort
  
  
  
@@ -532,17 +537,33 @@ class Gestion():
                 print("choix invalide, recommencez")
 
     def cheat_code(self)->None:
-        code = input("")
-        if code == "t-rn4_put3+s410p3":
-            self.inventaire.argent =  100000000000
-            self.pp.armes = #sabre laser ametiste si legite, eclair de force sinon
-            self.pp.armure = #armure mendalorienne
-            self.inventaire.equipage = [] #jabba, maul, grievious, vader
-            self.inventaire.vaisseau = #ton vaisseau pref
-            self.inventaire.nb_carburant = 10000000
-            self.inventaire.nb_carotte = 10000000
+        
+        self.inventaire.argent =  100000000000
+        self.pp.armes[1] = Arme("eclaire(badass)", 100, 0)#sabre laser ametiste si legite, eclair de force sinon
+        self.pp.armure = Armure("armure mandalorienne(cool)", 200, 70000) #armure mendalorienne
+        self.inventaire.equipage = [] #jabba, maul, grievious, vader
+        self.inventaire.vaisseau = Vaisseau("", "", 1, 1) #a changer
+        self.inventaire.nb_carburant = 10000000
+        self.inventaire.nb_carotte = 10000000
 
-    def menu_principale()->None:
+    def menu_principale(self)->None:
+        print("1. aller au marcket")
+        print("2. voyager")
+        print("3. combattre")
+        print("4. obtenir une prime")
+        print("5. voir les statz")
+        print("6. voir inventaire")
+        print("7. voir carte")
+        print("8. sauvegarder et quitter")
+        vader = False
+        for vador in self.inventaire.equipage:
+            if vador.nom == "Darth Vader":
+                vader = True
+        if self.planete.nom == "Death Star" and vader :
+            print("3131. detruire planete")
+
+    def detruire_planete(self)->None:
+        pass
         
 
 

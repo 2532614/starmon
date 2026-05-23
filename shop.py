@@ -245,10 +245,7 @@ class Shop():
 
 
 
-shop = Shop()
-shop.print_black_marcket()
-shop.print_marcket()
-shop.acheter(Inventaire(0,0,1000000000,0,0))
+
 
 
     
