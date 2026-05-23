@@ -49,8 +49,12 @@ class Vaisseau:
     
     @vitesse.setter
     def vitesse(self, vitesse:int) -> None:
-        if vitesse > 0:
-            self._vitesse = vitesse
+        if vitesse == "n/a" or vitesse == "unknown":
+            vitesse = 0
+        if vitesse == "1000km":
+            vitesse = 100
+        if int(vitesse) > 0:
+            self._vitesse = int(vitesse)
 
     @property
     def capacite_equipe(self) -> int:

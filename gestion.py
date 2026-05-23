@@ -59,7 +59,6 @@ class Gestion():
             self.planetes.append(Planete("Death Star", 0, False))
  
             co = 0
-            print(len(self.planetes))
             for id_planete in range(61):
                 self.planetes[id_planete].co = co
                 co += 31
@@ -68,43 +67,79 @@ class Gestion():
             for perso in dragon_request:
                 if "Jabba Desilijic Tiure" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("poing")), self.shop.armurerie("none")))
-                    self.planetes[21].occupants.append(self.personnages[len(self.personnages) - 1])
-                elif "Darth Vader" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 400, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("sabre vader"), self.shop.armurerie("poing vader")), self.shop.armurerie("none")))
-                    self.planetes[51].occupants.append(self.personnages[len(self.personnages) - 1])
-                elif "Darth Maul" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")), self.shop.armurerie("none")))
-                    self.planetes[41].occupants.append(self.personnages[len(self.personnages) - 1])
-                elif "Palpatine" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")),  self.shop.armurerie("none")))
-                    self.planetes[61].occupants.append(self.personnages[len(self.personnages) - 1])
+                    self.planetes[20].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Grievous" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 200, (self.shop.armurerie("mini poing"), self.shop.armurerie("sabre")), self.shop.armurerie("none")))
-                    self.planetes[31].occupants.append(self.personnages[len(self.personnages) - 1])
+                    self.planetes[30].occupants.append(self.personnages[len(self.personnages) - 1])
+                elif "Darth Maul" in perso["name"]:
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")), self.shop.armurerie("none")))
+                    self.planetes[40].occupants.append(self.personnages[len(self.personnages) - 1])
+                elif "Darth Vader" in perso["name"]:
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 400, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("sabre vader"), self.shop.armurerie("poing vader")), self.shop.armurerie("none")))
+                    self.planetes[50].occupants.append(self.personnages[len(self.personnages) - 1])
+                elif "Palpatine" in perso["name"]:
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")),  self.shop.armurerie("none")))
+                    self.planetes[60].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Sith" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "Jedi Order" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "IG-88" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 29, (self.shop.armurerie("poing"), self.shop.armurerie("Pistolet blaster DL-44")), self.shop.armurerie("none")))
                 elif "C-3PO" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("C3-poingO")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "droid" in perso["species"]:
                     self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("zap")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "wookiee" in perso["species"]:
                     self.personnages.append(Perso(perso["name"], "Wookie", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("arbalete laser(cool)")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "Squadron" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Colored Squadron", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "New Republic" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "Resistance" in perso["affiliations"]:
+                    arme = ""
                     match (random.randint(0,6)):
                         case 0:
                             arme = "zap"
@@ -118,11 +153,21 @@ class Gestion():
                             arme = "DC15 blaster"
                         case 5:
                             arme = "pistolet westar 35(cool)"
-                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, (self.shop.armurerie("poing"), self.shop(arme)), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie(arme)), self.shop.armurerie("none")))
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 elif "Galactic Republic" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
-                    self.habitant(perso["homeworld"])
+                    try:
+                        self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
                 self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, (self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")), self.shop.armurerie("none")))
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
@@ -140,7 +185,7 @@ class Gestion():
                     self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
 
 
-            dragon_request = requests.Session().get("swapi.info/api/starships").json()
+            dragon_request = requests.Session().get("https://swapi.info/api/starships").json()
             for vaisseau in dragon_request: 
                 vaisseaux = []
                 if "Death Star" == vaisseau["name"]:
@@ -168,7 +213,7 @@ class Gestion():
                 elif "Millennium Falcon" == vaisseau["name"]:
                     vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 100000, vaisseau["max_atmosphering_speed"]))
                 else:
-                    vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], int(vaisseau["cost_in_credits"]/10), vaisseau["max_atmosphering_speed"]))
+                    vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], int(int(vaisseau["cost_in_credits"])/10), vaisseau["max_atmosphering_speed"]))
                 self.shop.vaisseaux = vaisseaux
         
             self.planete = self.planetes[1]
@@ -809,3 +854,5 @@ class Gestion():
             if planete.nom == nom:
                 return f"la coordonné de {nom} est {planete.co}"
         return "aucune planete ne correspont"
+    
+
