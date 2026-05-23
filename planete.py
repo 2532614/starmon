@@ -34,7 +34,9 @@ class Planete:
     
     @co.setter
     def co(self, co:int) -> None:
-        if co >= -1:
+        if isinstance(co, str):
+            self._co = co
+        elif co >= -1:
             self._co = co
 
     def __str__(self):

@@ -21,7 +21,7 @@ class Perso():
         self.groupe = groupe
         self.race = race
         self._pv = 0
-        self._pv_max
+        self._pv_max = 0
         self.armes = armes
         self.armure = armure
 
@@ -57,14 +57,30 @@ class Perso():
             int: degats infliger
         """
         arme_utiliser = random.randint(10)
-        if arme_utiliser == 1:
-            return self.armes[1].damage
+        if arme_utiliser == 0:
+            if "(cool)" in self.armes[0].nom:
+                if random.randint(10) == 9:
+                    return self.armes[0].damage * 10
+            elif "(pas cool)" in self.armes[2].nom:
+                if random.randint(10) == 9:
+                    return int(self.armes[2].damage / 10)
+            return self.armes[0].damage
 
-        if len(self.armes) == 3:
-            if arme_utiliser < 7:
-                return self.arme[2].damage
-
+        if len(self.armes) == 3 and arme_utiliser < 7:
+            if "(cool)" in self.armes[2].nom:
+                if random.randint(10) == 9:
+                    return self.armes[2].damage * 10
+            elif "(pas cool)" in self.armes[2].nom:
+                if random.randint(10) == 9:
+                    return int(self.armes[2].damage / 10)
             return self.arme[2].damage
+        if "(cool)" in self.armes[1].nom:
+            if random.randint(10) == 9:
+                return self.armes[1].damage * 10
+        elif "(pas cool)" in self.armes[1].nom:
+            if random.randint(10) == 9:
+                return int(self.armes[1].damage / 10)
+        return self.armes[1].damage
         
     def subir_degats(self, degats_subit:int) -> None:
         """channge la vie d'un personnage

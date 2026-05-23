@@ -47,7 +47,23 @@ while mort == False:
         case "6" :
             gestion.inventaire.voir_inventaire()
         case "7" :
-            pass
+            print("----------------------------------------------------------------------------------------------------")
+            choix = input("voulez vous chercher une planete (1) par le nom ou (2) par sa coordonné: ")
+            print("")
+            match choix:
+                case "1":
+                    nom = input("quel est le nom de la planette: ")
+                    print(gestion.recherche_nom(nom))
+                case "2":
+                    try:
+                        co = input("quel est la coordonée de la planette: ")
+                        gestion.recherche_dicoto(co)
+                    except ValueError:
+                        print("valeur impossible")
+                case _:
+                    print("choix invalide")
+            print("----------------------------------------------------------------------------------------------------")
+            
         case "8" :
             gestion.enregistrer_json()
             break

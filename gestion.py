@@ -41,26 +41,26 @@ class Gestion():
             for planete in dragon_request:
                 if planete["name"] == "Mustafar":
                     mustafar = Planete(planete["name"], planete["orbital_period"], False)
+                elif "Coruscant" == planete["name"]:
+                    self.planetes.append(Planete(planete["name"], -1, False))
                 else:
                     self.planetes.append(Planete(planete["name"], (planete["orbital_period"]), False))
             orb = 1
-            for planete in self.planete:
+            for planete in self.planetes:
                 if planete.co == "unknown":
-                    planete.co == orb
+                    planete.co = orb
                     orb += 1
-                planete.co = int(planete.co)
+                else:
+                    planete.co = int(planete.co)
             self.planetes = self.tri_planete(self.planetes)
-            if "Coruscant" == planete["name"]:
-                 Planete(planete["name"], -1)
-           
-            planete = mustafar
-            for position in range(8):
-                self.planetes[50+position], planete = planete, self.planetes[50+position]
-            self.planetes.append(planete)
+            
+
+            self.planetes.insert(50, mustafar)
             self.planetes.append(Planete("Death Star", 0, False))
  
             co = 0
-            for id_planete in (61):
+            print(len(self.planetes))
+            for id_planete in range(61):
                 self.planetes[id_planete].co = co
                 co += 31
  
@@ -68,19 +68,19 @@ class Gestion():
             for perso in dragon_request:
                 if "Jabba Desilijic Tiure" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("poing")), self.shop.armurerie("none")))
-                    self.planetes[21].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[21].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Darth Vader" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 400, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("sabre vader"), self.shop.armurerie("poing vader")), self.shop.armurerie("none")))
-                    self.planetes[51].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[51].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Darth Maul" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")), self.shop.armurerie("none")))
-                    self.planetes[41].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[41].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Palpatine" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")),  self.shop.armurerie("none")))
-                    self.planetes[61].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[61].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Grievous" in perso["name"]:
                     self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 200, (self.shop.armurerie("mini poing"), self.shop.armurerie("sabre")), self.shop.armurerie("none")))
-                    self.planetes[31].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[31].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Sith" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
                     self.habitant(perso["homeworld"])
@@ -126,18 +126,18 @@ class Gestion():
                 self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, (self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")), self.shop.armurerie("none")))
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
+                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
                 self.personnages.append(Perso("battle droid B2", "Droid", "Droid", 70, (self.shop.armurerie("poing"), self.shop.armurerie("blaster integre")), self.shop.armurerie("none")))
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
-                self.personnages.append(Perso("clone", "clone army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17", "blaster(pas cool)")), self.shop.armurerie("none")))
+                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
+                self.personnages.append(Perso("clone", "clone army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
                 for id_planete in range(61):
                     if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
-                self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)"), self.shop.armurerie("blaster DC17", "blaster(pas cool)")), self.shop.armurerie("none")))
+                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
+                self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
                 for id_planete in range(61):
-                    self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages)])
+                    self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
 
 
             dragon_request = requests.Session().get("swapi.info/api/starships").json()
@@ -183,7 +183,7 @@ class Gestion():
         Returns:
             list: la  liste de planete trier
         """
-        lst_a_trier:list[Planete] = planetes.copy
+        lst_a_trier = planetes.copy()
        
         if len(lst_a_trier) <= 1:
             return lst_a_trier
@@ -199,7 +199,7 @@ class Gestion():
             else:
                 grand.append(lst_a_trier[num_plan])
  
-                return self.tri_planete(petit) + [pivot] + self.tri_planete(grand)
+        return self.tri_planete(petit) + [pivot] + self.tri_planete(grand)
            
     def habitant(self, habite:str) -> None:
         """assigne les personnage à leur planetes respective
@@ -209,7 +209,7 @@ class Gestion():
         """
         for planete in self.planetes:
             if habite in planete.nom:
-                planete.occupants.append(self.personnages[len(self.personnages)])
+                planete.occupants.append(self.personnages[len(self.personnages) - 1])
    
     def charger_json(self) -> None:
         with open("perso.json", "r", encoding="utf-8") as fichier:
@@ -792,7 +792,7 @@ class Gestion():
         planete = planetes[pivot]
         while True :
             if (planete.co - 15) < coordonnées < (planete.co + 15):
-                return planete.nom
+                return f"le nom de la planete est {planete.nom}"
             elif planete.co > coordonnées:
                 gap = int(gap / 2)
                 pivot += gap
@@ -801,8 +801,11 @@ class Gestion():
                 gap = int(gap / 2)
                 pivot -= gap
                 planete = planetes[pivot]
-
-    def recherche_nom(self, nom:str) -> int:
+            if gap == 0:
+                return "aucune planette ne correspond"
+            
+    def recherche_nom(self, nom:str) -> str:
         for planete in self.planete:
             if planete.nom == nom:
-                return planete.co
+                return f"la coordonné de {nom} est {planete.co}"
+        return "aucune planete ne correspont"
