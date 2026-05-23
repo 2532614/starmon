@@ -621,7 +621,8 @@ class Gestion():
         print("5. voir les statz")
         print("6. voir inventaire")
         print("7. voir carte")
-        print("8. sauvegarder et quitter")
+        print("8. chercher du travail")
+        print("9. sauvegarder et quitter")
         vader = False
         for vador in self.inventaire.equipage:
             if vador.nom == "Darth Vader":
@@ -678,7 +679,7 @@ class Gestion():
         plt.legend()
         plt.show()
 
-    def stats(self) -> None:
+    def statz(self) -> None:
         insultes = 0
         for insulte in self.inventaire.nico.to_dick_uh_i_mean_dict:
             insultes += 1
@@ -752,7 +753,7 @@ class Gestion():
         for planete in self.planetes:
             nb += len(planete.habitants)
 
-        print(f"la moyenne de personnes par planête est de {nb / 61} personnes")
+        print(f"la moyenne de personnes par planète est de {nb / 61} personnes")
 
         print("----------------------------------------------------------------------------------------------------")
 

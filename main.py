@@ -28,7 +28,22 @@ while mort == False:
         case "4":
             gestion.prime()
         case "5":
-             pass
+            choix = input("statz ou graph?: ")
+            if choix == "statz" or choix == "1":
+                gestion.statz()
+
+            elif choix == "graph" or  choix == "2":
+                choix = input("voulez vous voir le nombre de planete detruite(1) ou la variation de l'argent(2)?: ")
+                if choix == "1":
+                    gestion.pie_chart()
+                elif choix == "2":
+                    gestion.line_chart()
+                else:
+                    print("rien ne se passe, nico t'es nul")
+            else:
+                print("nico Tes tellement nul, on va drop ton adresse")
+
+
         case "6" :
             gestion.inventaire.voir_inventaire()
         case "7" :
@@ -36,11 +51,19 @@ while mort == False:
         case "8" :
             gestion.enregistrer_json()
             break
+        case "9":
+            gestion.inventaire.argent += 200
+            print("vous recevez 200 credit")
         case "3131":
             if gestion.planete.nom != "Death Star":
                 print("piratage de la station :Death Star: à distance en cours")
             gestion.detruire_planete()
         case "t-rn4_put3+s410p3":
             gestion.cheat_code()
+
+        case _:
+            print("nico Tes tellement nul, on va drop ton adresse")
+            print("3929 Rue de Lyon")
+
 
 
