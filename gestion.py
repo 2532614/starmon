@@ -6,6 +6,7 @@ from inventaire import Inventaire
 from perso import Perso
 from shop import Shop
 from images import image
+from pp import Pp
 import matplotlib.pyplot as plt
 import requests
 import random
@@ -22,7 +23,7 @@ class Gestion():
         """decole la gestion du programme
         """
         self.shop = Shop()
-        self.pp = Perso("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
+        self.pp = Pp("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
         self.inventaire = Inventaire([], [], 0, "", [])
         self.primes = []
@@ -122,7 +123,7 @@ class Gestion():
                         id_planete = random.randint(0, 61)
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
-                elif "Squadron" in perso["affiliations"]:
+                elif "Green Squadron" in perso["affiliations"] or "Red Squadron" in perso["affiliations"] or "Black Squadron" in perso["affiliations"] or "Gold Squadron" in perso["affiliations"]:
                     self.personnages.append(Perso(perso["name"], "Colored Squadron", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
@@ -168,26 +169,36 @@ class Gestion():
                         id_planete = random.randint(0, 61)
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
-                self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, (self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")), self.shop.armurerie("none")))
-                for id_planete in range(61):
-                    if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-                self.personnages.append(Perso("battle droid B2", "Droid", "Droid", 70, (self.shop.armurerie("poing"), self.shop.armurerie("blaster integre")), self.shop.armurerie("none")))
-                for id_planete in range(61):
-                    if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-                self.personnages.append(Perso("clone", "clone army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
-                for id_planete in range(61):
-                    if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
-                        self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-                self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
-                for id_planete in range(61):
+                else:
+                    self.personnages.append(Perso(perso["name"], "None", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+                    try:
+                        if isinstance(perso["homeworld"], list):
+                            self.habitant("Rodia")
+                        else:
+                            self.habitant(perso["homeworld"])
+                    except KeyError:
+                        id_planete = random.randint(0, 61)
+                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
+                            id_planete -= 1
+            self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, (self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")), self.shop.armurerie("none")))
+            for id_planete in range(61):
+                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
                     self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
+            self.personnages.append(Perso("battle droid B2", "Droid", "Droid", 70, (self.shop.armurerie("poing"), self.shop.armurerie("blaster integre")), self.shop.armurerie("none")))
+            for id_planete in range(61):
+                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
+                    self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
+            self.personnages.append(Perso("clone", "clone army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
+            for id_planete in range(61):
+                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
+                    self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
+            self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+            for id_planete in range(61):
+                self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
 
-
+            vaisseaux = []
             dragon_request = requests.Session().get("https://swapi.info/api/starships").json()
             for vaisseau in dragon_request: 
-                vaisseaux = []
                 if "Death Star" == vaisseau["name"]:
                     pass
                 elif "TIE Advanced x1" == vaisseau["name"]:
@@ -653,13 +664,14 @@ class Gestion():
         self.inventaire.argent =  100000000000
         self.pp.armes[1] = Arme("eclaire(badass)", 100, 0)#sabre laser ametiste si legite, eclair de force sinon
         self.pp.armure = Armure("armure mandalorienne(cool)", 200, 70000) #armure mendalorienne
-        self.inventaire.equipage = [self.personnages[15], self.personnages[78], self.personnages[43], self.personnages[3]] #jabba, grievious, maul, vader
+        self.inventaire.equipage = [self.personnages[15], self.personnages[77], self.personnages[42], self.personnages[3]] #jabba, grievious, maul, vader
         self.shop.vaisseau_pp("Star Destroyer", self.inventaire) #c good
         self.inventaire.nb_carburant = 10000000
         self.inventaire.nb_carotte = 10000000
+        print("skill issue")
 
     def menu_principale(self)->None:
-        print("1. aller au marcket")
+        print("1. aller au market")
         print("2. voyager")
         print("3. combattre")
         print("4. obtenir une prime")
@@ -726,21 +738,25 @@ class Gestion():
 
     def statz(self) -> None:
         insultes = 0
+        print("")
+        print("-" * 100)
         for insulte in self.inventaire.nico.to_dick_uh_i_mean_dict:
             insultes += 1
         print(f"nos insultes envers nico au cours du projet: {insultes}")
+        print("-" * 100)
 
         print("")
 
-        vaisseau_rapide = self.tri_vaisseaux
-        print("----------------------------------------------------------------------------------------------------")
+        vaisseau_rapide = self.tri_vaisseaux(self.shop.vaisseaux)
+        print("-" * 100)
         print("les 10 vaisseaux les plus rapide:")
         for rapide in range(10):
             print(f"{rapide + 1}. {vaisseau_rapide[rapide].nom}, vitesse: {vaisseau_rapide[rapide].vitesse}")
-        print("----------------------------------------------------------------------------------------------------")
+        print("-" * 100)
         print("")
-        print("----------------------------------------------------------------------------------------------------")
+        print("-" * 100)
         print("définir le nombre de presonnes par groupe:")
+        print("0. None")
         print("1. Sith")
         print("2. Jedi")
         print("3. Droid")
@@ -754,6 +770,10 @@ class Gestion():
         print("")
         nb = 0
         match choix:
+            case "0":
+                for perso in self.personnages:
+                    if "None" in perso.groupe:
+                        nb += 1
             case "1":
                 for perso in self.personnages:
                     if "Sith" in perso.groupe:
@@ -791,19 +811,20 @@ class Gestion():
                     if "Hutt clan" in perso.groupe:
                         nb += 1
         print(f"il y a {nb} pesonnes dans ce groupe")
-        print("----------------------------------------------------------------------------------------------------")
+        print("-" * 100)
         print("")
-        print("----------------------------------------------------------------------------------------------------")
+        print("-" * 100)
         nb = 0
         for planete in self.planetes:
-            nb += len(planete.habitants)
+            nb += len(planete.occupants)
 
-        print(f"la moyenne de personnes par planète est de {nb / 61} personnes")
+        print(f"la moyenne de personnes par planète est de {(nb / 61):.2f} personnes")
 
-        print("----------------------------------------------------------------------------------------------------")
+        print("-" * 100)
+        print("")
 
 
-    def tri_vaisseaux(self) -> list:
+    def tri_vaisseaux(self, lst_vaisseaux) -> list:
         """tri la liste de vaisseau selon la vitesse
  
         Args:
@@ -812,7 +833,7 @@ class Gestion():
         Returns:
             list: la  liste de vaisseaux trier
         """
-        lst_a_trier:list[Planete] = self.shop.vaisseaux.copy
+        lst_a_trier:list[Planete] = lst_vaisseaux.copy()
        
         if len(lst_a_trier) <= 1:
             return lst_a_trier
@@ -828,31 +849,31 @@ class Gestion():
             else:
                 grand.append(lst_a_trier[num_vaisseau])
  
-                return self.tri_planete(grand) + [pivot] + self.tri_planete(petit)
+        return self.tri_vaisseaux(grand) + [pivot] + self.tri_vaisseaux(petit)
             
-    def recherche_dicoto(self, coordonnées:int) -> str:
-        planetes = self.planetes.copy
-        gap = int((len(planetes) - 1)/2)
-        pivot = gap
-        planete = planetes[pivot]
-        while True :
-            if (planete.co - 15) < coordonnées < (planete.co + 15):
+    def recherche_dicoto(self, coordonnées: int) -> str:
+        planetes = sorted(self.planetes, key=lambda p: p.co)
+
+        gauche = 0
+        droite = len(planetes) - 1
+
+        while gauche <= droite:
+            milieu = (gauche + droite) // 2
+            planete = planetes[milieu]
+
+            if (planete.co - 15) <= coordonnées <= (planete.co + 15):
                 return f"le nom de la planete est {planete.nom}"
+
             elif planete.co > coordonnées:
-                gap = int(gap / 2)
-                pivot += gap
-                planete = planetes[pivot]
-            elif planete.co > coordonnées:
-                gap = int(gap / 2)
-                pivot -= gap
-                planete = planetes[pivot]
-            if gap == 0:
-                return "aucune planette ne correspond"
+                droite = milieu - 1
+            else:
+                gauche = milieu + 1
+
+        return "aucune planete ne correspond"
             
     def recherche_nom(self, nom:str) -> str:
-        for planete in self.planete:
+        for planete in self.planetes:
             if planete.nom == nom:
                 return f"la coordonné de {nom} est {planete.co}"
         return "aucune planete ne correspont"
-    
 

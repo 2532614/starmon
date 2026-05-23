@@ -56,29 +56,29 @@ class Perso():
         Returns:
             int: degats infliger
         """
-        arme_utiliser = random.randint(10)
+        arme_utiliser = random.randint(0, 9)
         if arme_utiliser == 0:
             if "(cool)" in self.armes[0].nom:
-                if random.randint(10) == 9:
+                if random.randint(0, 9) == 9:
                     return self.armes[0].damage * 10
             elif "(pas cool)" in self.armes[2].nom:
-                if random.randint(10) == 9:
+                if random.randint(0, 9) == 9:
                     return int(self.armes[2].damage / 10)
             return self.armes[0].damage
 
         if len(self.armes) == 3 and arme_utiliser < 7:
             if "(cool)" in self.armes[2].nom:
-                if random.randint(10) == 9:
+                if random.randint(0, 9) == 9:
                     return self.armes[2].damage * 10
             elif "(pas cool)" in self.armes[2].nom:
-                if random.randint(10) == 9:
+                if random.randint(0, 9) == 9:
                     return int(self.armes[2].damage / 10)
             return self.arme[2].damage
         if "(cool)" in self.armes[1].nom:
-            if random.randint(10) == 9:
+            if random.randint(0, 9) == 9:
                 return self.armes[1].damage * 10
         elif "(pas cool)" in self.armes[1].nom:
-            if random.randint(10) == 9:
+            if random.randint(0, 9) == 9:
                 return int(self.armes[1].damage / 10)
         return self.armes[1].damage
         
@@ -88,10 +88,23 @@ class Perso():
         Args:
             degats_subit (int): _description_
         """
-        self.armure.pv -= degats_subit
-        if self.armure.pv < 0:
-            self.pv += self.armure.pv
-            self.armure.pv = 0
+        if "(cool)" in self.armes[1].nom:
+            if random.randint(0, 3) == 3:
+                pass
+            else:
+                self.armure.pv -= degats_subit
+                if self.armure.pv < 0:
+                    self.pv += self.armure.pv
+                    self.armure.pv = 0
+        elif "(pas cool)" in self.armes[1].nom:
+            if random.randint(0,1) == 1:
+                self.pv += self.armure.pv
+                self.armure.pv = 0
+        else:
+            self.armure.pv -= degats_subit
+            if self.armure.pv < 0:
+                self.pv += self.armure.pv
+                self.armure.pv = 0
 
     def to_dick_uh_i_mean_dict(self) -> dict:
         """prépare le personnage pour le convertir en json 

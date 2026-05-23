@@ -21,7 +21,7 @@ class Vaisseau:
 
     def __str__(self)-> None:
 
-        espaces = 7 - len(str(self.prix))
+        espaces = 9 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     
     @property

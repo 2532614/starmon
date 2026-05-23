@@ -23,11 +23,16 @@ class Pp(Perso):
     def heal(self, carottes):
         return super().heal(carottes)
     
-    def attaquer(self, arme:int) -> int:
-        if "cool" in self.armes[arme]:
-            if random.randint(10) == 9:
+    def attaquer(self) -> int:
+        print("voici vos armes:")
+        for (n, arme) in enumerate(self.armes):
+            print(f"{n}. {arme.nom}")
+        arme = input("quelle arme voules vous utiliser: ")
+
+        if "cool" in self.armes[arme] or "(badass)" in self.armes[arme]:
+            if random.randint(0, 9) == 9:
                     return self.armes[arme].damage * 10
         elif "(pas cool)" in self.armes[arme].nom:
-            if random.randint(10) == 9:
+            if random.randint(0, 9) == 9:
                 return int(self.armes[arme].damage / 10)
         return self.armes[arme].damage

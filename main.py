@@ -7,7 +7,6 @@ from planete import Planete
 from shop import Shop
 from vaisseau import Vaisseau
 
-
 mort = False
 
 gestion = Gestion()
@@ -28,7 +27,7 @@ while mort == False:
         case "4":
             gestion.prime()
         case "5":
-            choix = input("statz ou graph?: ")
+            choix = input("(1)statz ou (2)graph?: ")
             if choix == "statz" or choix == "1":
                 gestion.statz()
 
@@ -56,8 +55,8 @@ while mort == False:
                     print(gestion.recherche_nom(nom))
                 case "2":
                     try:
-                        co = input("quel est la coordonée de la planette: ")
-                        gestion.recherche_dicoto(co)
+                        co = int(input("quel est la coordonée de la planette: "))
+                        print(gestion.recherche_dicoto(co))
                     except ValueError:
                         print("valeur impossible")
                 case _:

@@ -3,6 +3,8 @@ from armure import Armure
 from inventaire import Inventaire
 from vaisseau import Vaisseau
 import random
+import copy
+
 
 class Shop():
     def __init__(self):
@@ -45,7 +47,6 @@ class Shop():
             Arme("eclaire(badass)", 100, 0),
             Arme("poing", 1, 0),
             Arme("branch", 4, 0)
-
             ]
         
         self.consommable = ["ration", "carburant"]
@@ -93,7 +94,7 @@ class Shop():
         """
         for vaisseau in self.vaisseaux:
             if vaisseau.nom in nom:
-                inventaire.vaisseau = vaisseau.copy
+                inventaire.vaisseau = copy.copy(vaisseau)
                 if " (modifié)" in nom:
                     inventaire.vaisseau.nom = f"{inventaire.vaisseau.nom} (modifié)"
 
@@ -106,7 +107,10 @@ class Shop():
 
         for arme in self.armes:
             if arme.prix != 0:
-                print(f"{nb}. {arme}")
+                if nb < 10:
+                    print(f"{nb}.  {arme}")
+                else:
+                    print(f"{nb}. {arme}")
                 nb += 1
         print("")
         print("="*15)
@@ -123,7 +127,7 @@ class Shop():
         print(" LES CONSOMMABLES")
         print("="*15)
         for x in range(2):
-            print(f"{nb}. 1      credit,    {self.consommable[x]}")
+            print(f"{nb}. 1        credit,    {self.consommable[x]}")
             nb += 1
 
         print("")
@@ -134,9 +138,9 @@ class Shop():
             print(f"{nb}. {42500 + 7500*x}   credit,    {self.parti_vaisseau[x]}")
             nb += 1
 
-        print("="*15)
+        print("="*100)
         print(" LES VAISSEAUX")
-        print("="*15)
+        print("="*100)
 
         for vaisseau in self.vaisseaux:
             if vaisseau.prix != 0:
@@ -145,16 +149,17 @@ class Shop():
         
     def print_marcket(self)-> None:
         nb = 0
-        print("="*15)
+        print("="*100)
         print(" LES VAISSEAUX")
-        print("="*15)
+        print("="*100)
 
         for vaisseau in self.vaisseaux:
             if vaisseau.prix != 0:
-                print(f"{nb}. {vaisseau}")
+                if nb < 10:
+                    print(f"{nb}.  {vaisseau}")
+                else:
+                    print(f"{nb}. {vaisseau}")
                 nb += 1
-
-        
 
 
         print("")
@@ -162,9 +167,10 @@ class Shop():
         print(" LES CONSOMMABLES")
         print("="*15)
         for x in range(2):
-            print(f"{nb}. 1      credit,    {self.consommable[x]}")
+            print(f"{nb}. 1        credit,    {self.consommable[x]}")
             nb += 1
-        print(f" {nb}. ne rien acheter")
+        print("")
+        print(f"{nb}. ne rien acheter")
 
 
     def acheter(self, inventaire:Inventaire)-> None:
@@ -177,20 +183,20 @@ class Shop():
                     self.print_marcket()
                     try:
                         choix2 = int(input("que voulez vous acheter?(uniquelement le #): "))
-                        if choix2 >= 0 and choix2 <= 36:
+                        if choix2 >= 0 and choix2 <= 34:
                         
                             if inventaire.argent >= self.vaisseaux[choix2].prix:
                                 inventaire.spent((random.randint(101, 111) / 100) * (self.vaisseaux[choix2].prix), False, True)
                                 inventaire.vaisseau = self.vaisseaux[choix2].copy
-                        elif choix2 >37 and choix2 <= 38:
+                        elif choix2 >35 and choix2 <= 36:
                             
-                                if inventaire.argent >= self.consommable[37 - choix2].prix:
-                                    inventaire.spent((random.randint(101, 111) / 100) * (self.consommable[37 - choix2].prix), False, True)
-                                if choix2 == 33 : 
+                                if inventaire.argent >= self.consommable[35 - choix2].prix:
+                                    inventaire.spent((random.randint(101, 111) / 100) * (self.consommable[35 - choix2].prix), False, True)
+                                if choix2 == 35 : 
                                     inventaire.nb_carotte = self.consommable[37 - choix2]
-                                elif choix2 == 34:
+                                elif choix2 == 36:
                                     inventaire.nb_carburant = self.consommable[37 - choix2]
-                        elif choix2 == 39:
+                        elif choix2 == 37:
                             pass
                     except ValueError:
                         print("transaction non concluse")

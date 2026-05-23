@@ -40,6 +40,6 @@ class Arme:
         Returns:
             str: la description de l'arme
         """
-        espaces = 7 - len(str(self.prix))
+        espaces = 9 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     
