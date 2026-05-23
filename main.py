@@ -37,7 +37,9 @@ while mort == False:
             gestion.enregistrer_json()
             break
         case "3131":
-            gestion.detruire_planete
+            if gestion.planete.nom != "Death Star":
+                print("piratage de la station :Death Star: à distance en cours")
+            gestion.detruire_planete()
         case "t-rn4_put3+s410p3":
             gestion.cheat_code()
 

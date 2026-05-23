@@ -43,7 +43,7 @@ class Gestion():
                 else:
                     self.planetes.append(Planete(planete["name"], planete["orbital_period"], False))
             self.planetes = self.tri_planete(self.planetes)
-            if "coruscant" == planete["name"]:
+            if "Coruscant" == planete["name"]:
                  Planete(planete["name"], -1)
            
             planete = mustafar
@@ -553,7 +553,26 @@ class Gestion():
 
 
     def voyager(self)-> None:
-        pass
+        nb = 0
+        for planete in self.planetes:
+            if planete.detruit == False:
+                if planete.co < (self.planete.co + self.inventaire.nb_carburant) and planete.co > (self.planete.co - self.inventaire.nb_carburant):
+                    print(f"{nb}. {planete}")
+                    nb += 1
+        choix = input("ou voulez vous aller?(nom): ")
+        for planete in self.planetes:
+            if planete.nom == choix:
+                self.planete = planete
+                for x in self.inventaire.equipage + 1:
+                    if self.inventaire.nb_carotte != 0:
+                        self.inventaire.nb_carotte -= 1
+                        try:
+                            self.inventaire.equipage[x].pv = self.inventaire.equipage[x].pv_max
+                            print(f"{self.inventaire.equipage[x].nom} est restoré")
+                        except FileNotFoundError:
+                            self.pp.pv = self.pp.pv_max
+                            print("vous etes restoré")
+
 
     def changer_armures(self)->None:
 
@@ -600,9 +619,22 @@ class Gestion():
             print("3131. detruire planete")
 
     def detruire_planete(self)->None:
-        pass
+        nb = 0
+        for planete in self.planetes:
+            if planete.detruit == False:
+                print(f"{nb}. {planete}")
+                nb += 1
         
-
+        choix = input("entree votre requete monsieur le chancelier?(nom): ")
+        detruit = 0
+        for planete in self.planetes:
+            if planete.nom == choix:
+                planete.detruit = True
+                image("boom")
+                print(f"la planete {planete.nom} n'existe plus")
+                detruit = 31
+        if detruit == 0 :
+            print("aucune planete detruite")
 
 
         

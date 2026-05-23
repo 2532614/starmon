@@ -104,3 +104,4 @@ class Perso():
         else:
             pv += carottes
             return 0
+        
