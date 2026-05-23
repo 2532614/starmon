@@ -5,9 +5,11 @@ from planete import Planete
 from inventaire import Inventaire
 from perso import Perso
 from shop import Shop
+from images import image
 import requests
 import random
 import json
+import os
 
  
 "t-rn4_put3+s410p3"
@@ -283,6 +285,7 @@ class Gestion():
     def combattre(self) -> bool:
         """permet de faire combattre
         """
+        mort = False
         play = True
         enemies = []
         boss = False
@@ -299,18 +302,18 @@ class Gestion():
             enemies.append(perso)
             play = True
         while play:
-            nb = 0
-            print("="*8)
-            print("VOTRE TOUR")
-            print("="*8)
-            print("")
-            print("")
-            print("1. attaquer")
-            print("2. attraper")
-            print("3. fuir")
-
             again = True
             while again:
+                nb = 0
+                print("="*8)
+                print("VOTRE TOUR")
+                print("="*8)
+                print("")
+                print("")
+                print("1. attaquer")
+                print("2. attraper")
+                print("3. fuir")
+
                 try:
                     choix = int(input("que voulez vous faire?: "))
                     match choix:
@@ -322,8 +325,8 @@ class Gestion():
                                 encore = True
                                 while encore == True:
                                     try:
-                                        choix = int(input("quel adversaire attaquez vous?: "))
-                                        enemies[choix].subir_degats(self.pp.attaquer())
+                                        nb_target = int(input("quel adversaire attaquez vous?: "))
+                                        enemies[nb_target].subir_degats(self.pp.attaquer())
                                         if enemies[nb_target].pv == 0 :
                                             print(f"{enemies[nb_target].nom} est mort")
                                             if enemies[nb_target].pop in self.prime["nom"]:
@@ -335,6 +338,7 @@ class Gestion():
                                         else:
                                             print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
                                         encore = False
+                                        again = False
             
             
                                     except ValueError:
@@ -350,7 +354,8 @@ class Gestion():
                                 if len(self.inventaire.equipage) >= 3:
                                     self.inventaire.equipage.append(enemies[choix].copy)
                                     print(f"vous avez recruté {enemies[choix].nom}, il fait maintenant partie de votre equipe")
-                                    play = False
+                                    encore = False
+                                    again = False
 
                         case 3:
                             print("vous prenez la fuite")
@@ -366,6 +371,7 @@ class Gestion():
                 enemies[nb_target].subir_degats(aly.attaquer())
                 if enemies[nb_target].pv == 0 :
                     print(f"{enemies[nb_target].nom} est mort")
+                    enemies.pop(nb_target)
                     if enemies[nb_target].pop in self.prime["nom"]:
                         money = random.randint(5000, 15000)
                         print("++++++++")
@@ -386,6 +392,7 @@ class Gestion():
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
+                        enemies.pop(nb_target)
                         if enemies[nb_target].pop in self.prime["nom"]:
                             money = random.randint(5000, 15000)
                             print("++++++++")
@@ -398,46 +405,21 @@ class Gestion():
 
 
             for enemie in enemies:
-                print(f"{enemie.nom} attaque")
-                nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
-                try:
-                    print(f"il vise {self.inventaire.equipage[nb_target].nom}")
-                except IndexError:
-                    print("il vise Pépé")
-            
-                try:
-                    self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
-                    if self.inventaire.equipage[nb_target].pv == 0 :
-                        print(f"{self.inventaire.equipage[nb_target].nom} est mort")
-                    else :
-                        print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
-                except IndexError:
-                    self.pp.subir_degats(enemie.attaquer())
-                    if self.pp.pv == 0 :
-                        print(f"{self.pp.nom} est mort")
-                    else :
-                        print(f"{self.pp.nom} est a {self.pp.pv}")
-            
-            
-                if self.pp.pv == 0 :
-                    print("GAME OVER")
-                    play = False
-                    mort = True
-                    return mort
-
-                if aly.nom == "grievious":
-                    print("grievious attaque une seconde fois")
-                        
+                if enemie.nom == "Jabba Desilijic Tiure":
+                    attaque = random.randint(2)
+                    if attaque == 0:
+                        print(f"{enemie.nom} attaque")
                     nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
                     try:
                         print(f"il vise {self.inventaire.equipage[nb_target].nom}")
                     except IndexError:
                         print("il vise Pépé")
-            
+                
                     try:
                         self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
                         if self.inventaire.equipage[nb_target].pv == 0 :
                             print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                            self.inventaire.equipage.pop(nb_target)
                         else :
                             print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
                     except IndexError:
@@ -446,14 +428,69 @@ class Gestion():
                             print(f"{self.pp.nom} est mort")
                         else :
                             print(f"{self.pp.nom} est a {self.pp.pv}")
+                    else:
+                        nb_sbire = random.randint(3)+1
+                        print(f"Jabba Desilijic Tiure appelle {nb_sbire} sbire")
+                        for nb in nb_sbire:
+                            enemies.append(perso[22])
+                        
+
+                else:
+                    print(f"{enemie.nom} attaque")
+                    nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                    try:
+                        print(f"il vise {self.inventaire.equipage[nb_target].nom}")
+                    except IndexError:
+                        print("il vise Pépé")
+                
+                    try:
+                        self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
+                        if self.inventaire.equipage[nb_target].pv == 0 :
+                            print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                            self.inventaire.equipage.pop(nb_target)
+                        else :
+                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                    except IndexError:
+                        self.pp.subir_degats(enemie.attaquer())
+                        if self.pp.pv == 0 :
+                            print(f"{self.pp.nom} est mort")
+                        else :
+                            print(f"{self.pp.nom} est a {self.pp.pv}")
+
+                    if enemie.nom == "grievious":
+                        print("grievious attaque une seconde fois")
+                            
+                        nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                        try:
+                            print(f"il vise {self.inventaire.equipage[nb_target].nom}")
+                        except IndexError:
+                            print("il vise Pépé")
+                
+                        try:
+                            self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
+                            if self.inventaire.equipage[nb_target].pv == 0 :
+                                print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                                self.inventaire.equipage.pop(nb_target)
+                            else :
+                                print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                        except IndexError:
+                            self.pp.subir_degats(enemie.attaquer())
+                            if self.pp.pv == 0 :
+                                print(f"{self.pp.nom} est mort")
+                            else :
+                                print(f"{self.pp.nom} est a {self.pp.pv}")
             
             
-                    if self.pp.pv == 0 :
-                        print("GAME OVER")
-                        play = False
-                        mort = True
-                        return mort
- 
+            if self.pp.pv == 0 :
+                image("game_over")
+                play = False
+                mort = True
+                os.remove("perso.json")
+                os.remove("planetes.json")
+                os.remove("vaisseaux.json")
+                os.remove("team.json")
+                os.remove("inventaire.json")
+                return mort
  
  
     def changer_arme(self)->None:
@@ -541,8 +578,8 @@ class Gestion():
         self.inventaire.argent =  100000000000
         self.pp.armes[1] = Arme("eclaire(badass)", 100, 0)#sabre laser ametiste si legite, eclair de force sinon
         self.pp.armure = Armure("armure mandalorienne(cool)", 200, 70000) #armure mendalorienne
-        self.inventaire.equipage = [] #jabba, maul, grievious, vader
-        self.inventaire.vaisseau = Vaisseau("", "", 1, 1) #a changer
+        self.inventaire.equipage = [self.personnages[15], self.personnages[78], self.personnages[43], self.personnages[3]] #jabba, grievious, maul, vader
+        self.shop.vaisseau_pp("Star Destroyer", self.inventaire) #c good
         self.inventaire.nb_carburant = 10000000
         self.inventaire.nb_carotte = 10000000
 

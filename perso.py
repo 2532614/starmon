@@ -21,10 +21,12 @@ class Perso():
         self.groupe = groupe
         self.race = race
         self._pv = 0
+        self._pv_max
         self.armes = armes
         self.armure = armure
 
         self.pv = pv
+        self.pv_max = pv
 
     @property
     def pv(self) -> int:
@@ -34,6 +36,17 @@ class Perso():
     def pv(self, pv:int) -> None:
         if pv > 0:
             self._pv = pv
+        else:
+            pv = 0
+    
+    @property
+    def pv_max(self) -> int:
+        return self._pv_max
+    
+    @pv_max.setter
+    def pv_max(self, pv:int) -> None:
+        if pv > 0:
+            self._pv_max = pv
         else:
             pv = 0
     
@@ -74,3 +87,20 @@ class Perso():
         for arme in self.armes:
             dick["armes"].append(arme.nom)
         return dick
+    
+    def heal(self, carottes:int) -> int:
+        """soigne le perso et réduit les carottes
+
+        Args:
+            carottes (int): nombre de carotte dans l'inventaire
+
+        Returns:
+            int: nombre de carottes restantes après les soins
+        """
+        if carottes > self.pv_max - self.pv:
+            carottes -= self.pv_max - self.pv
+            self.pv = self.pv_max
+            return carottes
+        else:
+            pv += carottes
+            return 0
