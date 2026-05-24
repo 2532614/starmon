@@ -23,7 +23,7 @@ class Planete:
         Returns:
             dict: prepare la planete pour le json
         """
-        dick = {"nom": self.nom, "co": self.co, "occupants": "[]", "detruit": self.detruit}
+        dick = {"nom": self.nom, "co": self.co, "occupants": [], "detruit": self.detruit}
         for occupant in self.occupants:
             dick["occupants"].append(occupant.nom)
         return dick

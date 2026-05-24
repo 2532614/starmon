@@ -1,5 +1,5 @@
 class Vaisseau:
-    def __init__(self, nom: str, modele: str, prix: int,vitesse: float):
+    def __init__(self, nom: str, modele: str, prix: int, vitesse: float):
         self.nom = nom
         self.modele = modele
         self._prix = 0
@@ -21,7 +21,7 @@ class Vaisseau:
 
     def __str__(self)-> None:
 
-        espaces = 9 - len(str(self.prix))
+        espaces = 10 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     
     @property
@@ -64,6 +64,9 @@ class Vaisseau:
     def capacite_equipe(self, capacite_equipe:int) -> None:
         if capacite_equipe > 0:
             self._capacite_equipe = capacite_equipe
+
+    def copy(self):
+        return Vaisseau(self.nom, self.modele, self.prix, self.vitesse)
 
 
 

@@ -37,7 +37,7 @@ class Perso():
         if pv > 0:
             self._pv = pv
         else:
-            pv = 0
+            self._pv = 0
     
     @property
     def pv_max(self) -> int:
@@ -58,28 +58,28 @@ class Perso():
         """
         arme_utiliser = random.randint(0, 9)
         if arme_utiliser == 0:
-            if "(cool)" in self.armes[0].nom:
+            if "(pas cool)" in self.armes[0].nom:
+                if random.randint(0, 9) == 9:
+                    return int(self.armes[0].damage / 10)
+            elif "(cool)" in self.armes[0].nom or "(badass)" in self.armes[0].nom:
                 if random.randint(0, 9) == 9:
                     return self.armes[0].damage * 10
-            elif "(pas cool)" in self.armes[2].nom:
-                if random.randint(0, 9) == 9:
-                    return int(self.armes[2].damage / 10)
             return self.armes[0].damage
 
         if len(self.armes) == 3 and arme_utiliser < 7:
-            if "(cool)" in self.armes[2].nom:
-                if random.randint(0, 9) == 9:
-                    return self.armes[2].damage * 10
-            elif "(pas cool)" in self.armes[2].nom:
+            if "(pas cool)" in self.armes[2].nom:
                 if random.randint(0, 9) == 9:
                     return int(self.armes[2].damage / 10)
-            return self.arme[2].damage
-        if "(cool)" in self.armes[1].nom:
-            if random.randint(0, 9) == 9:
-                return self.armes[1].damage * 10
-        elif "(pas cool)" in self.armes[1].nom:
+            elif "(cool)" in self.armes[2].nom or "(badass)" in self.armes[2].nom:
+                if random.randint(0, 9) == 9:
+                    return self.armes[2].damage * 10
+            return self.armes[2].damage
+        if "(pas cool)" in self.armes[1].nom:
             if random.randint(0, 9) == 9:
                 return int(self.armes[1].damage / 10)
+        elif "(cool)" in self.armes[1].nom or "(badass)" in self.armes[1].nom:
+            if random.randint(0, 9) == 9:
+                return self.armes[1].damage * 10
         return self.armes[1].damage
         
     def subir_degats(self, degats_subit:int) -> None:
@@ -88,7 +88,10 @@ class Perso():
         Args:
             degats_subit (int): _description_
         """
-        if "(cool)" in self.armes[1].nom:
+        if "(pas cool)" in self.armure.nom:
+            if random.randint(0,1) == 1:
+                self.pv -= degats_subit
+        elif "(cool)" in self.armure.nom:
             if random.randint(0, 3) == 3:
                 pass
             else:
@@ -96,10 +99,6 @@ class Perso():
                 if self.armure.pv < 0:
                     self.pv += self.armure.pv
                     self.armure.pv = 0
-        elif "(pas cool)" in self.armes[1].nom:
-            if random.randint(0,1) == 1:
-                self.pv += self.armure.pv
-                self.armure.pv = 0
         else:
             self.armure.pv -= degats_subit
             if self.armure.pv < 0:
@@ -117,6 +116,7 @@ class Perso():
             dick["armes"].append(arme.nom)
         return dick
     
+    #sert à rien on a fait autrement
     def heal(self, carottes:int) -> int:
         """soigne le perso et réduit les carottes
 
@@ -134,3 +134,6 @@ class Perso():
             pv += carottes
             return 0
         
+    def copy(self):
+        return Perso(self.nom, self.groupe, self.race, self.pv, self.armes.copy(), self.armure
+        )

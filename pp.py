@@ -11,16 +11,21 @@ class Pp(Perso):
         return super().pv
     
     @pv.setter
-    def pv(self, pv: int):
-        self._pv = pv
-    
+    def pv(self, pv:int) -> None:
+        if pv > 0:
+            self._pv = pv
+        else:
+            self._pv = 0
     @property
     def pv_max(self):
         return super().pv_max
     
     @pv_max.setter
-    def pv_max(self, pv_max: int):
-        self._pv_max = pv_max
+    def pv_max(self, pv:int) -> None:
+        if pv > 0:
+            self._pv_max = pv
+        else:
+            pv = 0
     
     def subir_degats(self, degats_subit):
         return super().subir_degats(degats_subit)
@@ -32,15 +37,24 @@ class Pp(Perso):
         return super().heal(carottes)
     
     def attaquer(self) -> int:
-        print("voici vos armes:")
-        for (n, arme) in enumerate(self.armes):
-            print(f"{n}. {arme.nom}")
-        arme = input("quelle arme voules vous utiliser: ")
+        while True:
+            try:
+                print("voici vos armes:")
+                for (n, arme) in enumerate(self.armes):
+                    print(f"{n}. {arme.nom}")
+                arme = int(input("quelle arme voules vous utiliser: "))
 
-        if "cool" in self.armes[arme] or "(badass)" in self.armes[arme]:
-            if random.randint(0, 9) == 9:
-                    return self.armes[arme].damage * 10
-        elif "(pas cool)" in self.armes[arme].nom:
-            if random.randint(0, 9) == 9:
-                return int(self.armes[arme].damage / 10)
-        return self.armes[arme].damage
+                if "(pas cool)" in self.armes[arme].nom:
+                    if random.randint(0, 9) == 9:
+                        print("")
+                        return int(self.armes[arme].damage / 10)
+                elif "cool" in self.armes[arme].nom or "(badass)" in self.armes[arme].nom:
+                    if random.randint(0, 9) == 9:
+                            print("")
+                            return self.armes[arme].damage * 10
+                print("")
+                return self.armes[arme].damage
+            except ValueError:
+                print("valeur impossible")
+            except IndexError:
+                print("valeur impossible")

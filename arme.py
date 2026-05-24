@@ -40,6 +40,9 @@ class Arme:
         Returns:
             str: la description de l'arme
         """
-        espaces = 9 - len(str(self.prix))
+        espaces = 10 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
+    
+    def copy(self):
+        return Arme(self.nom, self.damage, self.prix)
     

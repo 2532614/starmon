@@ -12,6 +12,7 @@ mort = False
 gestion = Gestion()
 
 gestion.call_apis()
+
 print("************************")
 print("bienvenu dans Starmon")
 print("************************")
@@ -19,7 +20,20 @@ print("************************")
 while mort == False:
     gestion.menu_principale()
     choix = input("que voulez vous faire?: ")
+    print("")
     match choix:
+        case "0":
+            match input("changer (1)d'arme ou (2) d'armure: "):
+                case "1":
+                    print("")
+                    gestion.changer_arme()
+                case "2":
+                    print("")
+                    gestion.changer_armure()
+                case _:
+                    print("")
+                    print("choix invalide")
+                    print("")
         case "1":
             gestion.shop.acheter(gestion.inventaire)
         case "2":
@@ -54,7 +68,7 @@ while mort == False:
             print("")
             match choix:
                 case "1":
-                    nom = input("quel est le nom de la planette: ")
+                    nom = input("quel est le nom de la planete: ")
                     print(gestion.recherche_nom(nom))
                 case "2":
                     try:
@@ -66,12 +80,15 @@ while mort == False:
                     print("choix invalide")
             print("----------------------------------------------------------------------------------------------------")
             
-        case "8" :
-            gestion.enregistrer_json()
-            break
-        case "9":
-            gestion.inventaire.argent += 200
+
+        case "8":
+            gestion.inventaire.spend(-200, False, False)
             print("vous recevez 200 credit")
+
+        case "9" :
+            gestion.enregistrer_json()
+            mort = True
+
         case "3131":
             if gestion.planete.nom != "Death Star":
                 print("piratage de la station :Death Star: à distance en cours")

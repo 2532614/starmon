@@ -21,7 +21,7 @@ class Armure:
         Returns:
             str: la description de l'armure
         """
-        espaces = 9 - len(str(self.prix))
+        espaces = 10 - len(str(self.prix))
         return f"{self.prix}" + " " * espaces + f"credits,   {self.nom}"
     
     @property
@@ -41,8 +41,8 @@ class Armure:
     
     @pv.setter
     def pv(self,pv)-> int:
-        if pv >= 0:
-            self._pv = pv
-        elif pv < 0 :
-            self._pv = 0 
+        self._pv = pv
+
+    def copy(self):
+        return Armure(self.nom, self.pv, self.prix)
 

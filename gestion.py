@@ -14,7 +14,7 @@ import json
 import os
 
  
-"t-rn4_put3+s410p3"
+#t-rn4_put3+s410p3
  
 class Gestion():
     """gère le programe
@@ -25,7 +25,7 @@ class Gestion():
         self.shop = Shop()
         self.pp = Pp("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
-        self.inventaire = Inventaire([], [], 10000000000, Vaisseau("Tas de ferailles", "inconnu", 0, 100), [])
+        self.inventaire = Inventaire([], [], 0, Vaisseau("Tas de ferailles", "inconnu", 5, 31), [])
         self.primes = []
  
         self.planetes = []
@@ -67,22 +67,22 @@ class Gestion():
             dragon_request = requests.Session().get("https://akabab.github.io/starwars-api/api/all.json").json()
             for perso in dragon_request:
                 if "Jabba Desilijic Tiure" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("poing")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Hutt clan", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("poing")], self.shop.armurerie("none")))
                     self.planetes[20].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Grievous" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 200, (self.shop.armurerie("mini poing"), self.shop.armurerie("sabre")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Separatist Droid", perso["species"], 200, [self.shop.armurerie("mini poing"), self.shop.armurerie("sabre laser")], self.shop.armurerie("none")))
                     self.planetes[30].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Darth Maul" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 200, [self.shop.armurerie("etranglement de force"), self.shop.armurerie("double sabre maul"), self.shop.armurerie("mini poing")], self.shop.armurerie("none")))
                     self.planetes[40].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Darth Vader" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 400, (self.shop.armurerie("etranglement de force"), self.shop.armurerie("sabre vader"), self.shop.armurerie("poing vader")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 400, [self.shop.armurerie("etranglement de force"), self.shop.armurerie("sabre vader"), self.shop.armurerie("poing vader")], self.shop.armurerie("none")))
                     self.planetes[50].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Palpatine" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, (self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")),  self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 1000, [self.shop.armurerie("poing sidious"), self.shop.armurerie("eclaire(badass)")],  self.shop.armurerie("none")))
                     self.planetes[60].occupants.append(self.personnages[len(self.personnages) - 1])
                 elif "Sith" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Sith", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("sabre laser"), self.shop.armurerie("la force(trop mainsteam)")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -90,7 +90,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "Jedi Order" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("sabre_laser"), self.shop.armurerie("la force(trop mainsteam)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Jedi", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("sabre laser"), self.shop.armurerie("la force(trop mainsteam)")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -98,9 +98,9 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "IG-88" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 29, (self.shop.armurerie("poing"), self.shop.armurerie("Pistolet blaster DL-44")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 29, [self.shop.armurerie("poing"), self.shop.armurerie("Pistolet blaster DL-44")], self.shop.armurerie("none")))
                 elif "C-3PO" in perso["name"]:
-                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("C3-poingO")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("C3-poingO")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -108,7 +108,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "droid" in perso["species"]:
-                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("zap")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Droid", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("zap")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -116,7 +116,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "wookiee" in perso["species"]:
-                    self.personnages.append(Perso(perso["name"], "Wookie", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("arbalete laser(cool)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Wookie", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("arbalete laser(cool)")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -124,7 +124,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "Green Squadron" in perso["affiliations"] or "Red Squadron" in perso["affiliations"] or "Black Squadron" in perso["affiliations"] or "Gold Squadron" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Colored Squadron", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Colored Squadron", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster DC17")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -132,7 +132,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "New Republic" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "New Republic", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -154,7 +154,7 @@ class Gestion():
                             arme = "DC15 blaster"
                         case 5:
                             arme = "pistolet westar 35(cool)"
-                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie(arme)), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Resistance", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie(arme)], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -162,7 +162,7 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 elif "Galactic Republic" in perso["affiliations"]:
-                    self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "Galactic Republic", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none")))
                     try:
                         self.habitant(perso["homeworld"])
                     except KeyError:
@@ -170,29 +170,32 @@ class Gestion():
                         if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
                             id_planete -= 1
                 else:
-                    self.personnages.append(Perso(perso["name"], "None", perso["species"], 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+                    self.personnages.append(Perso(perso["name"], "None", perso["species"], 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none")))
                     try:
                         if isinstance(perso["homeworld"], list):
-                            self.habitant("Rodia")
+                            self.habitant("rodia")
                         else:
                             self.habitant(perso["homeworld"])
                     except KeyError:
-                        id_planete = random.randint(0, 61)
-                        if id_planete == 21 or id_planete == 31 or id_planete == 41 or id_planete == 51 or id_planete == 61:
-                            id_planete -= 1
-            self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, (self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")), self.shop.armurerie("none")))
+                        play = True
+                        while play:
+                            id_planete = random.randint(0, 61)
+                            if id_planete == 20 and id_planete == 30 and id_planete == 40 and id_planete == 50 and id_planete == 6:
+                                id_planete -= 1
+                                play = False
+            self.personnages.append(Perso("battle droid B1", "Droid", "Droid", 30, [self.shop.armurerie("poing"), self.shop.armurerie("fusil blaster E-5(pas cool)")], self.shop.armurerie("none")))
             for id_planete in range(61):
-                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
+                if id_planete != 20 and id_planete != 30 and id_planete != 40 and id_planete != 50 and id_planete != 60:
                     self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-            self.personnages.append(Perso("battle droid B2", "Droid", "Droid", 70, (self.shop.armurerie("poing"), self.shop.armurerie("blaster integre")), self.shop.armurerie("none")))
+            self.personnages.append(Perso("battle droid B2", "Droid", "Droid", 70, [self.shop.armurerie("poing"), self.shop.armurerie("blaster integre")], self.shop.armurerie("none")))
             for id_planete in range(61):
-                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
+                if id_planete != 20 and id_planete != 30 and id_planete != 40 and id_planete != 50 and id_planete != 60:
                     self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-            self.personnages.append(Perso("clone", "clone army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17")), self.shop.armurerie("none")))
+            self.personnages.append(Perso("clone", "clone army", "clone", 100, [self.shop.armurerie("poing"), self.shop.armurerie("DC15 blaster"), self.shop.armurerie("blaster DC17")], self.shop.armurerie("none")))
             for id_planete in range(61):
-                if id_planete != 21 or id_planete != 31 or id_planete != 41 or id_planete != 51 or id_planete != 61:
+                if id_planete != 20 and id_planete != 30 and id_planete != 40 and id_planete != 50 and id_planete != 60:
                     self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
-            self.personnages.append(Perso("Storm trooper", "storm trooper army", "clone", 100, (self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")), self.shop.armurerie("none")))
+            self.personnages.append(Perso("Storm trooper", "storm trooper army", "storm trooper", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none")))
             for id_planete in range(61):
                 self.planetes[id_planete].occupants.append(self.personnages[len(self.personnages) - 1])
 
@@ -225,7 +228,9 @@ class Gestion():
                     vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], 100000, vaisseau["max_atmosphering_speed"]))
                 else:
                     vaisseaux.append(Vaisseau(vaisseau["name"], vaisseau["model"], int(int(vaisseau["cost_in_credits"])/10), vaisseau["max_atmosphering_speed"]))
-                self.shop.vaisseaux = vaisseaux
+                
+            vaisseaux.append(Vaisseau("Tas de ferailles", "inconnu", 0, 0))
+            self.shop.vaisseaux = vaisseaux
         
             self.planete = self.planetes[1]
 
@@ -264,8 +269,9 @@ class Gestion():
             habite (str): la planete en question
         """
         for planete in self.planetes:
-            if habite in planete.nom:
+            if habite in planete.nom.lower():
                 planete.occupants.append(self.personnages[len(self.personnages) - 1])
+                return
    
     def charger_json(self) -> None:
         with open("perso.json", "r", encoding="utf-8") as fichier:
@@ -280,11 +286,11 @@ class Gestion():
             donnees = json.load(fichier)
  
             for planete in donnees:
-                self.planetes.append(Planete(planete["name"], planete["orbital_period"], planete["detruit"]))
-                for habitant in self.planete["occupants"]:
+                self.planetes.append(Planete(planete["nom"], planete["co"], planete["detruit"]))
+                for habitant in planete["occupants"]:
                     for perso in self.personnages:
                         if habitant == perso.nom:
-                            self.planetes[len(self.planetes) - 1].append(perso)
+                            self.planetes[len(self.planetes) - 1].occupants.append(perso)
  
         with open("vaisseaux.json", "r", encoding="utf-8") as fichier:
             donnees = json.load(fichier)
@@ -299,7 +305,7 @@ class Gestion():
             for perso in donnees:
                 if pp == 1:
                     pp += 1
-                    self.pp = Perso(perso["nom"], perso["groupe"], perso["race"], perso["pv"], [], self.shop.armurerie(perso["armure"]))
+                    self.pp = Pp(perso["nom"], perso["groupe"], perso["race"], perso["pv"], [], self.shop.armurerie(perso["armure"]))
                     for arme in perso["armes"]:
                         self.pp.armes.append(self.shop.armurerie(arme))
 
@@ -356,12 +362,12 @@ class Gestion():
         play = True
         enemies = []
         boss = False
-        for numero_membre in len(self.inventaire.equipage):
+        for numero_membre in range(len(self.inventaire.equipage) + 1):
             while play:
-                perso = self.planete.occupants[random.randint(0, len(self.planete.occupants))].copy
-                if ("Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso) and boss:
+                perso = self.planete.occupants[random.randint(0, len(self.planete.occupants)-1)].copy()
+                if ("Jabba Desilijic Tiure" in perso.nom or "Grevious" in perso.nom or "Darth Maul" in perso.nom or "Darth Vader" in perso.nom or "Palpatine" in perso.nom) and boss:
                     pass
-                elif "Jabba Desilijic Tiure" in perso or "Grevious" in perso or "Darth Maul" in perso or "Darth Vader" in perso or "Palpatine" in perso:
+                elif "Jabba Desilijic Tiure" in perso.nom or "Grevious" in perso.nom or "Darth Maul" in perso.nom or "Darth Vader" in perso.nom or "Palpatine" in perso.nom:
                     boss = True
                     play = False
                 else:
@@ -372,103 +378,139 @@ class Gestion():
             again = True
             while again:
                 nb = 0
-                print("="*8)
+
+                print("=" * 100)
                 print("VOTRE TOUR")
-                print("="*8)
+                print("=" * 100)
                 print("")
+                print("les enemis sont:")
+                for enemie in enemies:
+                    print(f"{enemie.nom}")
+                    encore = True
                 print("")
                 print("1. attaquer")
                 print("2. attraper")
                 print("3. fuir")
 
-                try:
-                    choix = int(input("que voulez vous faire?: "))
-                    match choix:
-                        case 1:
+                choix = input("que voulez vous faire?: ")
+                print("")
+                match choix:
+                    case "1":
 
-                            for enemie in enemies:
-                                print(f"{nb}. {enemie.nom}")
-                                nb += 1
-                                encore = True
-                                while encore == True:
-                                    try:
-                                        nb_target = int(input("quel adversaire attaquez vous?: "))
-                                        enemies[nb_target].subir_degats(self.pp.attaquer())
-                                        if enemies[nb_target].pv == 0 :
-                                            print(f"{enemies[nb_target].nom} est mort")
-                                            if enemies[nb_target].pop in self.prime["nom"]:
-                                                money = random.randint(5000, 15000)
-                                                print("++++++++")
-                                                print(f"prime reçu: {money}")
-                                                print("++++++++")
-                                                self.inventaire.argent += money
-                                        else:
-                                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
-                                        encore = False
-                                        again = False
-            
-            
-                                    except ValueError:
-                                        print("valeur impossible")
+                        for enemie in enemies:
+                            print(f"{nb}. {enemie.nom}")
+                            nb += 1
+                            encore = True
+                        while encore == True:
+                            try:
+                                nb_target = int(input("quel adversaire attaquez vous?: "))
+                                print("")
+                                enemies[nb_target].subir_degats(self.pp.attaquer())
+                                if enemies[nb_target].pv == 0 :
+                                    print(f"{enemies[nb_target].nom} est mort")
+                                    for prime in self.primes:
+                                        if  enemies[nb_target].nom in prime["perso"]:
+                                            money = random.randint(5000, 15000)
+                                            print("+" * 100)
+                                            print(f"prime reçu: {money}")
+                                            print("+" * 100)
+                                            self.inventaire.spend(-money, False, False)
+                                            self.primes.remove(prime)
+                                    enemies.pop(nb_target)
+                                else:
+                                    print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv} pv")
+                                encore = False
+                                again = False
+    
+        
+                            except ValueError:
+                                print("valeur impossible")
+                                print("")
+                            except IndexError:
+                                print("valeur impossible")
+                                print("")
 
-                        case 2 :
-                            print("vous essayez de recruter un adversaire")
-                            for enemie in enemies:
-                                print(f"{nb}. {enemie.nom}")
-                                nb += 1
+                    case "2":
+                        print("vous essayez de recruter un adversaire")
+                        for enemie in enemies:
+                            print(f"{nb}. {enemie.nom}")
+                            nb += 1
+                        try:
                             choix = int(input("qui est la cible?: "))
                             if enemies[choix].pv < random.randint(10, 45):
-                                if len(self.inventaire.equipage) >= 3:
-                                    self.inventaire.equipage.append(enemies[choix].copy)
+                                if len(self.inventaire.equipage) <= 3:
+                                    self.inventaire.equipage.append(enemies[choix].copy())
                                     print(f"vous avez recruté {enemies[choix].nom}, il fait maintenant partie de votre equipe")
-                                    encore = False
-                                    again = False
+                                    enemies.pop(choix)
 
-                        case 3:
-                            print("vous prenez la fuite")
-                            play = False
-                except ValueError:
-                    print("ceci n'est pas une option")
+                                else:
+                                    print("votre équipe est pleine (4 aliés max)")
+                                
+                            else:
+                                print("vous avez échoué")
+                            encore = False
+                            again = False
+                            print("")
+                        except ValueError:
+                            print("valeur impossible")
+                            print("")
+                        except IndexError:
+                            print("valeur impossible")
+                            print("")
+
+                    case "3":
+                        print("vous prenez la fuite")
+                        play = False
+                        again = False
+                    case _:
+                        print("ceci n'est pas une option")
 
             for aly in self.inventaire.equipage:
-                print(f"{aly.nom} attaque")
-                nb_target = random.randint(0,len(enemies))
-                print(f"il vise {enemies[nb_target].nom}")
-            
-                enemies[nb_target].subir_degats(aly.attaquer())
-                if enemies[nb_target].pv == 0 :
-                    print(f"{enemies[nb_target].nom} est mort")
-                    enemies.pop(nb_target)
-                    if enemies[nb_target].pop in self.prime["nom"]:
-                        money = random.randint(5000, 15000)
-                        print("++++++++")
-                        print(f"prime reçu: {money}")
-                        print("++++++++")
-                        self.inventaire.argent += money
-                else :
-                    print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
-
-
-                if aly.nom == "grievious":
-                    print("grievious attaque une seconde fois")
-
-
-                    nb_target = random.randint(0,len(enemies))
+                try:
+                    nb_target = random.randint(0,len(enemies)-1)
+                    print(f"{aly.nom} attaque")
                     print(f"il vise {enemies[nb_target].nom}")
-            
+                
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
+                        for prime in self.primes:
+                            if  enemies[nb_target].nom in prime["perso"]:
+                                money = random.randint(5000, 15000)
+                                print("+" * 100)
+                                print(f"prime reçu: {money}")
+                                print("+" * 100)
+                                self.inventaire.spend(-money, False, False)
+                                self.primes.remove(enemies[nb_target])
                         enemies.pop(nb_target)
-                        if enemies[nb_target].pop in self.prime["nom"]:
-                            money = random.randint(5000, 15000)
-                            print("++++++++")
-                            print(f"prime reçu: {money}")
-                            print("++++++++")
-                            self.inventaire.argent += money
-
                     else :
-                        print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv}")
+                        print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv} pv")
+
+
+                    if aly.nom == "grievious":
+                        print("grievious attaque une seconde fois")
+
+
+                        nb_target = random.randint(0,len(enemies)-1)
+                        print(f"il vise {enemies[nb_target].nom}")
+                
+                        enemies[nb_target].subir_degats(aly.attaquer())
+                        if enemies[nb_target].pv == 0 :
+                            print(f"{enemies[nb_target].nom} est mort")
+                            for prime in self.primes:
+                                if  enemies[nb_target].nom in prime["perso"]:
+                                    money = random.randint(5000, 15000)
+                                    print("+" * 100)
+                                    print(f"prime reçu: {money}")
+                                    print("+" * 100)
+                                    self.inventaire.spend(-money, False, False)
+                                    self.primes.remove(enemies[nb_target])
+                            enemies.pop(nb_target)
+                        else :
+                            print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv} pv")
+                    print("")
+                except ValueError:
+                    pass
 
 
             for enemie in enemies:
@@ -476,7 +518,7 @@ class Gestion():
                     attaque = random.randint(2)
                     if attaque == 0:
                         print(f"{enemie.nom} attaque")
-                    nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                    nb_target = random.randint(0,len(self.inventaire.equipage))
                     try:
                         print(f"il vise {self.inventaire.equipage[nb_target].nom}")
                     except IndexError:
@@ -488,13 +530,13 @@ class Gestion():
                             print(f"{self.inventaire.equipage[nb_target].nom} est mort")
                             self.inventaire.equipage.pop(nb_target)
                         else :
-                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv} pv")
                     except IndexError:
                         self.pp.subir_degats(enemie.attaquer())
                         if self.pp.pv == 0 :
                             print(f"{self.pp.nom} est mort")
                         else :
-                            print(f"{self.pp.nom} est a {self.pp.pv}")
+                            print(f"{self.pp.nom} est a {self.pp.pv} pv")
                     else:
                         nb_sbire = random.randint(3)+1
                         print(f"Jabba Desilijic Tiure appelle {nb_sbire} sbire")
@@ -504,7 +546,7 @@ class Gestion():
 
                 else:
                     print(f"{enemie.nom} attaque")
-                    nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
+                    nb_target = random.randint(0,len(self.inventaire.equipage))
                     try:
                         print(f"il vise {self.inventaire.equipage[nb_target].nom}")
                     except IndexError:
@@ -516,13 +558,13 @@ class Gestion():
                             print(f"{self.inventaire.equipage[nb_target].nom} est mort")
                             self.inventaire.equipage.pop(nb_target)
                         else :
-                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv} pv")
                     except IndexError:
                         self.pp.subir_degats(enemie.attaquer())
                         if self.pp.pv == 0 :
                             print(f"{self.pp.nom} est mort")
                         else :
-                            print(f"{self.pp.nom} est a {self.pp.pv}")
+                            print(f"{self.pp.nom} est a {self.pp.pv} pv")
 
                     if enemie.nom == "grievious":
                         print("grievious attaque une seconde fois")
@@ -539,77 +581,130 @@ class Gestion():
                                 print(f"{self.inventaire.equipage[nb_target].nom} est mort")
                                 self.inventaire.equipage.pop(nb_target)
                             else :
-                                print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv}")
+                                print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv} pv")
                         except IndexError:
                             self.pp.subir_degats(enemie.attaquer())
                             if self.pp.pv == 0 :
                                 print(f"{self.pp.nom} est mort")
                             else :
-                                print(f"{self.pp.nom} est a {self.pp.pv}")
+                                print(f"{self.pp.nom} est a {self.pp.pv} pv")
             
             
             if self.pp.pv == 0 :
                 image("game_over")
-                play = False
-                mort = True
-                os.remove("perso.json")
-                os.remove("planetes.json")
-                os.remove("vaisseaux.json")
-                os.remove("team.json")
-                os.remove("inventaire.json")
-                return mort
- 
+                try:
+                    os.remove("perso.json")
+                    os.remove("planetes.json")
+                    os.remove("vaisseaux.json")
+                    os.remove("team.json")
+                    os.remove("inventaire.json")
+                except FileNotFoundError:
+                    pass
+                return True
+            elif len(enemies) == 0:
+                print("Victiore")
+                print("")
+                print("-" * 100)
+                print("")
+                return False
+        return False
+
  
     def changer_arme(self)->None:
         """permet de changer d'arme
         """
-        print("="*8)
-        print("CHANGEMENT D'ARME")
-        print("="*8)
-        nb = 0
-        for arme in self.inventaire.armes:
-            print(f"{nb}.{arme}")
-            nb += 1
-        encore = True
-        while encore:
+        if len(self.inventaire.armes) > 0:
+            print("=" * 100)
+            print("changement d'arme")
+            print("=" * 100)
+            print("")
+            nb = 0
+            for arme in self.inventaire.armes:
+                print(f"{nb}. {arme.nom}: {arme.damage} damage")
+                nb += 1
+            print("")
             try:
                 choix = int(input("quel arme  voulez vous equiper?: "))
-                self.pp.armes[1] = self.inventaire.armes[choix]
-                encore = False
+                self.inventaire.armes.append(self.pp.armes[1])
+                self.pp.armes[1] = self.inventaire.armes.pop(choix)
+                print(f"vous avez equiper {self.pp.armes[1]}")
             except ValueError:
-                print("choix invalide, recommencez")
+                print("choix invalide")
+            except IndexError:
+                print("choix invalide")
+
+    
+    def changer_armure(self)->None:
+        """permet de changer d'arme
+        """
+        if len(self.inventaire.armures) > 0:
+            print("=" * 100)
+            print("changement d'armure")
+            print("=" * 100)
+            print("")
+            nb = 0
+            for armure in self.inventaire.armures:
+                print(f"{nb}. {armure.nom}: {armure.pv} point de vie restant")
+                nb += 1
+            print("")
+            try:
+                choix = int(input("quel armure  voulez vous equiper?: "))
+                if self.pp.armure.pv > 0:
+                    self.inventaire.armures.append(self.pp.armure)
+                self.pp.armure = self.inventaire.armures.pop(choix)
+                print(f"vous avez equiper {self.pp.armure}")
+            except ValueError:
+                print("choix invalide")
+            except IndexError:
+                print("choix invalide")
+                
  
     def prime(self)-> None:
         """permete de generer une prime
         """
-        print("="*8)
+        print("=" * 100)
         print("cantina")
-        print("="*8)
-        planete1 = self.planetes[random.randint(len(self.planetes))]
-        prime1 = planete1.habitants[random.randint(len(planete1.habitants))]
- 
-        planete2 = self.planetes[random.randint(len(self.planetes))]
-        prime2 = planete2.habitants[random.randint(len(planete2.habitants))]
- 
-        planete3 = self.planetes[random.randint(len(self.planetes))]
-        prime3 = planete3.habitants[random.randint(len(planete3.habitants))]
+        print("=" * 100)
+        play = True
+        while play:
+            planete1 = self.planetes[random.randint(0, len(self.planetes) - 1)]
+            if len(planete1.occupants) != 4:
+                play = False
+        prime1 = planete1.occupants[random.randint(0, len(planete1.occupants) - 1)]
+
+        play = True
+        while play:
+            planete2 = self.planetes[random.randint(0, len(self.planetes) - 1)]
+            if len(planete2.occupants) != 4:
+                play = False
+        prime2 = planete2.occupants[random.randint(0, len(planete2.occupants) - 1)]
+
+        play = True
+        while play:
+            planete3 = self.planetes[random.randint(0, len(self.planetes) - 1)]
+            if len(planete3.occupants) != 4:
+                play = False
+        prime3 = planete3.occupants[random.randint(0, len(planete3.occupants) - 1)]
  
        
         print("")
-        print(f"1. {prime1} sur {planete1}")
-        print(f"2. {prime2} sur {planete2}")
-        print(f"3. {prime3} sur {planete3}")
-        choix = int(input("quel prime accepter vous?: "))
+        print(f"1. {prime1.nom} sur {planete1}")
+        print(f"2. {prime2.nom} sur {planete2}")
+        print(f"3. {prime3.nom} sur {planete3}")
+        choix = input("quel prime accepter vous?: ")
  
-        if choix == 1:
-            print(f"la prime pour {prime1} a été accepter")
-            self.primes.append({"planete" : planete1, "perso" : prime1})
-        elif choix == 2:
-            print(f"la prime pour {prime2} a été accepter")
-            self.primes.append({"planete" : planete2, "perso" : prime2})
-        elif choix == 3:
-            print(f"la prime pour {prime3} a été accepter")
-            self.primes.append({"planete" : planete3, "perso" : prime3})
+        if choix == "1":
+            print(f"la prime pour {prime1.nom} a été accepter")
+            self.primes.append({"planete" : planete1, "perso" : prime1.nom})
+        elif choix == "2":
+            print(f"la prime pour {prime2.nom} a été accepter")
+            self.primes.append({"planete" : planete2, "perso" : prime2.nom})
+        elif choix == "3":
+            print(f"la prime pour {prime3.nom} a été accepter")
+            self.primes.append({"planete" : planete3, "perso" : prime3.nom})
+        else:
+            print("aucune prime n'a été accepter")
+        
 
 
     def voir_prime(self)-> None:
@@ -620,54 +715,61 @@ class Gestion():
 
 
     def voyager(self)-> None:
+        print("-" * 100)
+        print("")
         nb = 0
         for planete in self.planetes:
             if planete.detruit == False:
-                if planete.co < (self.planete.co + self.inventaire.nb_carburant) and planete.co > (self.planete.co - self.inventaire.nb_carburant):
-                    print(f"{nb}. {planete}")
+                if self.inventaire.vaisseau.nom == "Tas de ferailles":
+                    print("T'a pas de vaisseau")
+                    print("")
+                    print("-" * 100)
+                    print("")
+                    return
+                else:
+                    if planete.co < (self.planete.co + self.inventaire.nb_carburant) and planete.co > (self.planete.co - self.inventaire.nb_carburant):
+                        print(f"{nb}. {planete}")
                     nb += 1
-        choix = input("ou voulez vous aller?(nom): ")
-        for planete in self.planetes:
-            if planete.nom == choix:
-                self.planete = planete
-                image("vroum_vroum")
+        choix = input("ou voulez vous aller?(nom/numero): ")
+        for planete in range(len(self.planetes)):
+            if (self.planetes[planete].nom == choix or str(planete) == choix) and self.planetes[planete].detruit == False:
+                distance = self.planetes[planete].co - self.planete.co
+                if distance < 0:
+                    distance = -distance
+                if distance < self.inventaire.nb_carburant:
+                    self.planete = self.planetes[planete]
+                    image("vroum_vroum")
             
-                for x in range(len(self.inventaire.equipage) + 1):
-                    if self.inventaire.nb_carotte != 0:
-                        self.inventaire.nb_carotte -= 1
-                        try:
-                            self.inventaire.equipage[x].pv = self.inventaire.equipage[x].pv_max
-                            print(f"{self.inventaire.equipage[x].nom} est restoré")
-                        except IndexError:
-                            self.pp.pv = self.pp.pv_max
-                            print("vous etes restoré")
-            else:
-                print("aucune planete ne porte ce nom")
+                    for x in range(len(self.inventaire.equipage) + 1):
+                        if self.inventaire.nb_carotte != 0:
+                            self.inventaire.nb_carotte -= 1
+                            try:
+                                self.inventaire.equipage[x].pv = self.inventaire.equipage[x].pv_max
+                                print(f"{self.inventaire.equipage[x].nom} est restoré")
+                            except IndexError:
+                                self.pp.pv = self.pp.pv_max
+                                print("vous etes restoré")
 
-
-    def changer_armures(self)->None:
-
-        print("="*8)
-        print("CHANGEMENT D'ARMURE")
-        print("="*8)
-        nb = 0
-        for armure in self.inventaire.armures:
-            print(f"{nb}.{armure}")
-            nb += 1
-        encore = True
-        while encore:
-            try:
-                choix = int(input("quel armure  voulez vous equiper?: "))
-                self.pp.armure[1] = self.inventaire.armures[choix]
-                encore = False
-            except ValueError:
-                print("choix invalide, recommencez")
+                            print("")
+                            print("-" * 100)
+                            print("")
+                            return
+                else:
+                    print("manque de carburant")
+                    print("")
+                    print("-" * 100)
+                    print("")
+                    return
+        print("aucune planete ne porte ce nom ou ce numero")
+        print("")
+        print("-" * 100)
+        print("")
 
     def cheat_code(self)->None:
         
-        self.inventaire.argent =  100000000000
-        self.pp.armes[1] = Arme("eclaire(badass)", 100, 0)#sabre laser ametiste si legite, eclair de force sinon
-        self.pp.armure = Armure("armure mandalorienne(cool)", 200, 70000) #armure mendalorienne
+        self.inventaire.spend(-100000000000, False, False)
+        self.pp.armes[1] = self.shop.armurerie("eclaire(badass)")#sabre laser ametiste si legite, eclair de force sinon
+        self.pp.armure = Armure("plot armor", 200, 70000) #armure mendalorienne
         self.inventaire.equipage = [self.personnages[15], self.personnages[77], self.personnages[42], self.personnages[3]] #jabba, grievious, maul, vader
         self.shop.vaisseau_pp("Star Destroyer", self.inventaire) #c good
         self.inventaire.nb_carburant = 10000000
@@ -676,6 +778,7 @@ class Gestion():
 
     def menu_principale(self)->None:
         print("")
+        print("0. changer d'arme/armure")
         print("1. aller au market")
         print("2. voyager")
         print("3. combattre")
@@ -691,6 +794,7 @@ class Gestion():
                 vader = True
         if self.planete.nom == "Death Star" and vader :
             print("3131. detruire planete")
+        print("")
 
     def detruire_planete(self)->None:
         nb = 0
@@ -699,13 +803,14 @@ class Gestion():
                 print(f"{nb}. {planete}")
                 nb += 1
         
-        choix = input("entree votre requete monsieur le chancelier?(nom): ")
+        choix = input("entree votre requete monsieur le chancelier?(nom/numero): ")
         detruit = 0
-        for planete in self.planetes:
-            if planete.nom == choix:
-                planete.detruit = True
+
+        for planete in range(len(self.planetes)):
+            if (self.planetes[planete].nom == choix or str(planete) == choix) and self.planetes[planete].detruit == False:
+                self.planetes[planete].detruit = True
                 image("boom")
-                print(f"la planete {planete.nom} n'existe plus")
+                print(f"la planete {self.planetes[planete].nom} n'existe plus")
                 detruit = 31
         if detruit == 0 :
             print("aucune planete detruite")

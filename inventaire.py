@@ -19,7 +19,7 @@ class Inventaire():
         """
         self.armes = armes
         self.armures = armures
-        self._argent = 1000000
+        self._argent = 0
         self.vaisseau = vaisseau
         self.equipage = equipage
         self.nico = Nico()
@@ -46,6 +46,8 @@ class Inventaire():
     
     def voir_inventaire(self)->None:
         try:
+            print("=" * 100)
+            print("")
             print("1. argent")
             print("2. equipage")
             print("3. armes")
@@ -54,58 +56,86 @@ class Inventaire():
             print("6. consommable")
             print("7. tout voir")
             choix = int(input("que voulez vous voir?: "))
+            print("")
             match choix:
                 case 1:
                     print("="*8)
+                    print("")
                     print(f"vous avez {self.argent} credits")
+                    print("")
                     print("="*8)
                 case 2:
                     print("="*8)
+                    print("")
                     print("votre équipage contient:")
-                    for x in self.equipage:
-                        print(x.nom)
+                    for perso in self.equipage:
+                        print(perso.nom)
+                    print("")
                     print("="*8)
                 case 3:
                     print("="*8)
-                    for x in self.armes:
-                        print(f"{x.nom}: {x.damage} damage")
+                    print("")
+                    for arme in self.armes:
+                        print(f"{arme.nom}: {arme.damage} damage")
+                    print("")
                     print("="*8)
                 case 4:
                     print("="*8)
-                    for x in self.armures:
-                        print(f"{x.nom}: {x.pv} point de vie restant")
+                    print("")
+                    for armure in self.armures:
+                        print(f"{armure.nom}: {armure.pv} point de vie restant")
+                    print("")
                     print("="*8)
                 case 5:
                     print("="*8)
+                    print("")
                     print(f"vous voyager à bord du {self.vaisseau.nom}")
+                    print("")
                     print("="*8)
                 case 6:
                     print("="*8)
+                    print("")
                     print(f"vous avez {self.nb_carotte} carottes et {self.nb_carburant} unités de carburant")
+                    print("")
                     print("="*8)
                 case 7:
                     print("="*8)
+                    print("")
                     print(f"vous avez {self.argent} credits")
+                    print("")
                     print("="*8)
+                    print("")
                     print("votre équipage contient:")
-                    for x in self.equipage:
-                        print(x.nom)
+                    for perso in self.equipage:
+                        print(perso.nom)
+                    print("")
                     print("="*8)
-                    for x in self.armes:
-                        print(f"{x.nom}: {x.damage} damage")
+                    print("")
+                    print("vos armes en stock sont:")
+                    for arme in self.armes:
+                        print(f"{arme.nom}: {arme.damage} damage")
+                    print("")
                     print("="*8)
-                    for x in self.armures:
-                        print(f"{x.nom}: {x.pv} point de vie restant")
+                    print("")
+                    print("vos armures en stock sont:")
+                    for armure in self.armures:
+                        print(f"{armure.nom}: {armure.pv} point de vie restant")
+                    print("")
                     print("="*8)
+                    print("")
                     print(f"vous voyager à bord du {self.vaisseau.nom}")
+                    print("")
                     print("="*8)
+                    print("")
                     print(f"vous avez {self.nb_carotte} carottes et {self.nb_carburant} unités de carburant")
+                    print("")
                     print("="*8)
+                    print("")
                 case _:
-                    pass
+                    print("valeur invalide")
 
         except ValueError:
-            print("valeur in valide")
+            print("valeur invalide")
 
     def spend(self, argent:int, black:bool, mark:bool) -> None:
         if self.argent < argent:
@@ -115,10 +145,10 @@ class Inventaire():
         self.money.append(self.argent)
         if black:
             self.black.append(self.black[len(self.black) - 1] + argent)
-            self.black.append(self.black[len(self.black) - 1])
+            self.mark.append(self.mark[len(self.mark) - 1])
         elif mark:
             self.mark.append(self.mark[len(self.mark) - 1] + argent)
-            self.mark.append(self.mark[len(self.mark) - 1])
+            self.black.append(self.black[len(self.black) - 1])
         else:
             self.black.append(self.black[len(self.black) - 1])
             self.mark.append(self.mark[len(self.mark) - 1])
