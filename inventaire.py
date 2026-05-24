@@ -19,7 +19,7 @@ class Inventaire():
         """
         self.armes = armes
         self.armures = armures
-        self._argent = 0
+        self._argent = 1000000
         self.vaisseau = vaisseau
         self.equipage = equipage
         self.nico = Nico()
@@ -108,10 +108,10 @@ class Inventaire():
             print("valeur in valide")
 
     def spend(self, argent:int, black:bool, mark:bool) -> None:
-        if self.agrent < argent:
+        if self.argent < argent:
             argent = self.argent
         self.argent -= argent
-        self.transactions.append(self.transaction[len(self.transaction) - 1] + 1)
+        self.transactions.append(self.transactions[len(self.transactions) - 1] + 1)
         self.money.append(self.argent)
         if black:
             self.black.append(self.black[len(self.black) - 1] + argent)

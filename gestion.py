@@ -25,7 +25,7 @@ class Gestion():
         self.shop = Shop()
         self.pp = Pp("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
-        self.inventaire = Inventaire([], [], 0, Vaisseau("Tas de ferailles", "inconnu", 0, 100), [])
+        self.inventaire = Inventaire([], [], 10000000000, Vaisseau("Tas de ferailles", "inconnu", 0, 100), [])
         self.primes = []
  
         self.planetes = []
