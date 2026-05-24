@@ -12,6 +12,9 @@ mort = False
 gestion = Gestion()
 
 gestion.call_apis()
+print("************************")
+print("bienvenu dans Starmon")
+print("************************")
 
 while mort == False:
     gestion.menu_principale()

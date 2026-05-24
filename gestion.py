@@ -25,7 +25,7 @@ class Gestion():
         self.shop = Shop()
         self.pp = Pp("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
-        self.inventaire = Inventaire([], [], 0, "", [])
+        self.inventaire = Inventaire([], [], 0, Vaisseau("Tas de ferailles", "inconnu", 0, 100), [])
         self.primes = []
  
         self.planetes = []
@@ -630,15 +630,19 @@ class Gestion():
         for planete in self.planetes:
             if planete.nom == choix:
                 self.planete = planete
-                for x in self.inventaire.equipage + 1:
+                image("vroum_vroum")
+            
+                for x in range(len(self.inventaire.equipage) + 1):
                     if self.inventaire.nb_carotte != 0:
                         self.inventaire.nb_carotte -= 1
                         try:
                             self.inventaire.equipage[x].pv = self.inventaire.equipage[x].pv_max
                             print(f"{self.inventaire.equipage[x].nom} est restoré")
-                        except FileNotFoundError:
+                        except IndexError:
                             self.pp.pv = self.pp.pv_max
                             print("vous etes restoré")
+            else:
+                print("aucune planete ne porte ce nom")
 
 
     def changer_armures(self)->None:
@@ -671,6 +675,7 @@ class Gestion():
         print("skill issue")
 
     def menu_principale(self)->None:
+        print("")
         print("1. aller au market")
         print("2. voyager")
         print("3. combattre")

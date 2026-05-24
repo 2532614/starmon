@@ -10,9 +10,17 @@ class Pp(Perso):
     def pv(self):
         return super().pv
     
+    @pv.setter
+    def pv(self, pv: int):
+        self._pv = pv
+    
     @property
     def pv_max(self):
         return super().pv_max
+    
+    @pv_max.setter
+    def pv_max(self, pv_max: int):
+        self._pv_max = pv_max
     
     def subir_degats(self, degats_subit):
         return super().subir_degats(degats_subit)
