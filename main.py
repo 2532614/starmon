@@ -16,7 +16,7 @@ gestion = Gestion()
 
 gestion.call_apis()
 nico = Nico("Nico", "prof", "Humain", 50, [gestion.shop.armurerie("poing"), gestion.shop.armurerie("poing")], gestion.shop.armurerie("none"))
-gestion.personnages.append(nico)
+
 gestion.planetes[60].occupants.append(nico)
 
 print("************************")
@@ -25,7 +25,7 @@ print("************************")
 
 while mort == False:
     gestion.menu_principale()
-    choix = input("que voulez vous faire?: ")
+    choix = input("que voulez-vous faire?: ")
     print("")
     match choix:
         case "0":

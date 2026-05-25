@@ -906,6 +906,7 @@ class Gestion():
         print("7. Resistance")
         print("8. Galactic Republic")
         print("9. Hutt clan")
+        print("10. Nico")
         choix = input("choisissez un goupe: ")
         print("")
         nb = 0
@@ -950,6 +951,8 @@ class Gestion():
                 for perso in self.personnages:
                     if "Hutt clan" in perso.groupe:
                         nb += 1
+            case "10":
+                nb = 1
         print(f"il y a {nb} pesonnes dans ce groupe")
         print("-" * 100)
         print("")
