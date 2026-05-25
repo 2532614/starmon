@@ -332,7 +332,8 @@ class Gestion():
     def enregistrer_json(self) -> None:
         lst_dict = []
         for perso in self.personnages:
-            lst_dict.append(perso.to_dick_uh_i_mean_dict())
+            if perso.nom != "Nico":
+                lst_dict.append(perso.to_dick_uh_i_mean_dict())
         with open("perso.json", "w", encoding="utf-8") as fichier:
             json.dump(lst_dict, fichier, indent=4)
         lst_dict = []

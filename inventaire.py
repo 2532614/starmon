@@ -2,6 +2,7 @@ from arme import Arme
 from armure import Armure
 from vaisseau import Vaisseau
 from perso import Perso
+
 from nico import Nico
 
 class Inventaire():
@@ -22,7 +23,7 @@ class Inventaire():
         self._argent = 0
         self.vaisseau = vaisseau
         self.equipage = equipage
-        self.nico = Nico()
+        self.nico = Nico("", "", "", 0, [Arme("", 0, 0), Arme("", 0, 0)], Armure("", 0, 0))
         self.nb_carotte = 5
         self.nb_carburant = 31
         self.transactions = [0]

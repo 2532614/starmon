@@ -178,10 +178,10 @@ class Shop():
 
 
     def acheter(self, inventaire:Inventaire)-> None:
-        encore = 1
-        while encore == 1:
+        encore = True
+        while encore:
             try:
-                choix =  input("quel shop voulez-vous allez?(1. marcket, 2. black marcket): ")
+                choix =  input("quel shop voulez-vous allez?(1. marcket, 2. black marcket, 0. quiter): ")
 
                 if choix == "1":
                     self.print_marcket()
@@ -223,7 +223,7 @@ class Shop():
 
 
 
-                    encore = 2
+                    encore = False
 
                 elif choix == "2":
                     self.print_black_marcket()
@@ -284,8 +284,16 @@ class Shop():
                     except ValueError:
                         print("transaction non concluse")
 
+                    encore = False
 
-                    encore = 2
+                elif choix == "0":
+                    print("vous etes parti")
+                    print("")
+                    encore = False
+                
+                else:
+                    print("valeur invalide")
+                    print("")
 
             except ValueError:
                 pass

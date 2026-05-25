@@ -6,6 +6,7 @@ from perso import Perso
 from planete import Planete
 from shop import Shop
 from vaisseau import Vaisseau
+from nico import Nico
 from images import image
 import os
 
@@ -14,6 +15,9 @@ mort = False
 gestion = Gestion()
 
 gestion.call_apis()
+nico = Nico("Nico", "prof", "Humain", 50, [gestion.shop.armurerie("poing"), gestion.shop.armurerie("poing")], gestion.shop.armurerie("none"))
+gestion.personnages.append(nico)
+gestion.planetes[60].occupants.append(nico)
 
 print("************************")
 print("bienvenu dans Starmon")

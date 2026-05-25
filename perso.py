@@ -135,5 +135,4 @@ class Perso():
             return 0
         
     def copy(self):
-        return Perso(self.nom, self.groupe, self.race, self.pv, self.armes.copy(), self.armure
-        )
+        return Perso(self.nom, self.groupe, self.race, self.pv, self.armes.copy(), self.armure)
