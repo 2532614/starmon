@@ -25,7 +25,7 @@ class Gestion():
         self.shop = Shop()
         self.pp = Pp("pp", "pp", "PP", 100, [self.shop.armurerie("poing"), self.shop.armurerie("blaster(pas cool)")], self.shop.armurerie("none"))
         self.personnages:list[Perso] = []
-        self.inventaire = Inventaire([], [], 0, Vaisseau("Tas de ferailles", "inconnu", 5, 31), [])
+        self.inventaire = Inventaire([], [], 0, Vaisseau("Tas de ferailles", "inconnu", 0, 0), [])
         self.primes = []
  
         self.planetes = []
@@ -710,8 +710,11 @@ class Gestion():
     def voir_prime(self)-> None:
         """permet de voir les primes en cours
         """
+        print("=" * 100)
+        print("voici vos primes:")
         for prime in self.primes:
-            print(f"vous avez accepter une prime pour {prime["perso"]} sur la planete {prime["planete"]}")
+            print(f"vous avez accepter une prime pour {prime["perso"]} sur la planete {prime["planete"].nom}")
+        print("=" * 100)
 
 
     def voyager(self)-> None:
@@ -786,8 +789,9 @@ class Gestion():
         print("5. voir les statz")
         print("6. voir inventaire")
         print("7. voir carte")
-        print("8. chercher du travail")
-        print("9. sauvegarder et quitter")
+        print("8. voir primes")
+        print("9. chercher du travail")
+        print("10. sauvegarder et quitter")
         vader = False
         for vador in self.inventaire.equipage:
             if vador.nom == "Darth Vader":

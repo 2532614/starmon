@@ -6,6 +6,8 @@ from perso import Perso
 from planete import Planete
 from shop import Shop
 from vaisseau import Vaisseau
+from images import image
+import os
 
 mort = False
 
@@ -80,12 +82,14 @@ while mort == False:
                     print("choix invalide")
             print("----------------------------------------------------------------------------------------------------")
             
-
         case "8":
+            gestion.voir_prime()
+
+        case "9":
             gestion.inventaire.spend(-200, False, False)
             print("vous recevez 200 credit")
 
-        case "9" :
+        case "10" :
             gestion.enregistrer_json()
             mort = True
 
@@ -99,6 +103,23 @@ while mort == False:
         case _:
             print("nico Tes tellement nul, on va drop ton adresse")
             print("3929 Rue de Lyon")
+    
+    detruit = 0
+    for planete in gestion.planetes:
+        if planete.detruit:
+            dertuit += 1
+
+    if detruit == 61:
+        mort = True
+        image("win")
+        try:
+            os.remove("perso.json")
+            os.remove("planetes.json")
+            os.remove("vaisseaux.json")
+            os.remove("team.json")
+            os.remove("inventaire.json")
+        except FileNotFoundError:
+            pass
 
 
 
