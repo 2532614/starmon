@@ -753,10 +753,10 @@ class Gestion():
                                 self.pp.pv = self.pp.pv_max
                                 print("vous etes restoré")
 
-                            print("")
-                            print("-" * 100)
-                            print("")
-                            return
+                        print("")
+                        print("-" * 100)
+                        print("")
+                        return
                 else:
                     print("manque de carburant")
                     print("")

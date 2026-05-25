@@ -192,7 +192,7 @@ class Shop():
                             if inventaire.argent >= self.vaisseaux[choix2].prix:
                                 inventaire.spend(self.vaisseaux[choix2].prix, False, True)
                                 inventaire.vaisseau = self.vaisseaux[choix2].copy()
-                                print(f"vous avez acheter le {self.vaisseaux[choix2]}")
+                                print(f"vous avez acheter le {self.vaisseaux[choix2].nom}")
                             else:
                                 print("vous n'avez pas les fonds necessaire")
                                 
@@ -231,16 +231,16 @@ class Shop():
                         choix2 = int(input("que voulez vous acheter?(uniquelement le #): "))
                         if choix2 >= 0 and choix2 <= 22:
                             if inventaire.argent >= self.armes[choix2].prix:
-                                inventaire.spend((random.randint(101, 111) / 100) * (self.armes[choix2].prix), True, False)
+                                inventaire.spend(int(random.randint(101, 111) / 100) * (self.armes[choix2].prix), True, False)
                                 inventaire.armes.append(self.armes[choix2])
-                                print(f"vous avez acheter un {self.armes[choix2]}")
+                                print(f"vous avez acheter un {self.armes[choix2].nom}")
                             else:
                                 print("vous n'avez pas les fonds necessaire")
                         elif choix2 >= 23 and choix2 <= 32:
                             if inventaire.argent >= self.armures[choix2 - 23].prix:
-                                inventaire.spend((random.randint(101, 111) / 100) * (self.armures[23 - choix2].prix), True, False)
+                                inventaire.spend(int(random.randint(101, 111) / 100) * (self.armures[choix2 - 23].prix), True, False)
                                 inventaire.armures.append(self.armures[choix2 - 23].copy())
-                                print(f"vous avez acheter un {self.armures[choix2 - 23]}")
+                                print(f"vous avez acheter un {self.armures[choix2 - 23].nom}")
                             else:
                                 print("vous n'avez pas les fonds necessaire")
                         elif choix2 >= 33 and choix2 <= 34:
@@ -249,7 +249,7 @@ class Shop():
                                 if n < 0:
                                     print("valeur invalide")
                                 elif inventaire.argent >= n:
-                                    inventaire.spend(((random.randint(101, 111) / 100) * n), True, False)
+                                    inventaire.spend((int(random.randint(101, 111) / 100) * n), True, False)
                                     if choix2 == 33 : 
                                         inventaire.nb_carotte += n
                                         print(f"vous avez acheter {n} carottes")
@@ -262,7 +262,7 @@ class Shop():
                                 print("valeur invalide")
                         elif choix2 >= 35 and choix2 <= 38:
                             if inventaire.argent >= self.parti_vaisseau[35 - choix2]["prix"]:
-                                inventaire.spend((random.randint(101, 111) / 100) * (self.parti_vaisseau[35 - choix2]["prix"]), True, False)
+                                inventaire.spend(int(random.randint(101, 111) / 100) * (self.parti_vaisseau[choix2 - 35]["prix"]), True, False)
                                 try :
                                     inventaire.vaisseau.nom = f"{inventaire.vaisseau.nom} (modifié)"
                                     print(f"vous avez acheter une modification de vaisseau")
@@ -272,9 +272,9 @@ class Shop():
                                 print("vous n'avez pas les fonds necessaire")
                         elif choix2 >= 39 and choix2 <= 73 :
                             if inventaire.argent >= self.vaisseaux[choix2 - 39].prix:
-                                inventaire.spend((random.randint(101, 111) / 100) * (self.vaisseaux[39 - choix2].prix), True, False)
+                                inventaire.spend(int(random.randint(101, 111) / 100) * (self.vaisseaux[choix2 - 39].prix), True, False)
                                 inventaire.vaisseau = self.vaisseaux[choix2 - 39].copy()
-                                print(f"vous avez acheter le {self.vaisseaux[choix2 - 39]}")
+                                print(f"vous avez acheter le {self.vaisseaux[choix2 - 39].nom}")
                             else:
                                 print("vous n'avez pas les fonds necessaire")
                         elif choix2 == 74:
