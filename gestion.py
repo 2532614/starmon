@@ -232,7 +232,7 @@ class Gestion():
             vaisseaux.append(Vaisseau("Tas de ferailles", "inconnu", 0, 0))
             self.shop.vaisseaux = vaisseaux
         
-            self.planete = self.planetes[1]
+            self.planete = self.planetes[0]
 
 
     def tri_planete(self, planetes:list[Planete]) -> list:
@@ -408,6 +408,7 @@ class Gestion():
                                 enemies[nb_target].subir_degats(self.pp.attaquer())
                                 if enemies[nb_target].pv == 0 :
                                     print(f"{enemies[nb_target].nom} est mort")
+                                    print("")
                                     for prime in self.primes:
                                         if  enemies[nb_target].nom in prime["perso"]:
                                             money = random.randint(5000, 15000)
@@ -419,6 +420,7 @@ class Gestion():
                                     enemies.pop(nb_target)
                                 else:
                                     print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv} pv")
+                                    print("")
                                 encore = False
                                 again = False
     
@@ -474,6 +476,7 @@ class Gestion():
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
+                        clear = 
                         for prime in self.primes:
                             if  enemies[nb_target].nom in prime["perso"]:
                                 money = random.randint(5000, 15000)
@@ -481,14 +484,16 @@ class Gestion():
                                 print(f"prime reçu: {money}")
                                 print("+" * 100)
                                 self.inventaire.spend(-money, False, False)
-                                self.primes.remove(enemies[nb_target])
+                                self.primes.remove(prime)
                         enemies.pop(nb_target)
                     else :
                         print(f"{enemies[nb_target].nom} est a {enemies[nb_target].pv} pv")
+                        print("")
 
 
-                    if aly.nom == "grievious":
-                        print("grievious attaque une seconde fois")
+                    if aly.nom == "Grievous":
+                        print("")
+                        print("Grievous attaque une seconde fois")
 
 
                         nb_target = random.randint(0,len(enemies)-1)
@@ -566,8 +571,9 @@ class Gestion():
                         else :
                             print(f"{self.pp.nom} est a {self.pp.pv} pv")
 
-                    if enemie.nom == "grievious":
-                        print("grievious attaque une seconde fois")
+                    if enemie.nom == "Grievous":
+                        print("")
+                        print("Grievous attaque une seconde fois")
                             
                         nb_target = random.randint(0,len(self.inventaire.equipage) + 1)
                         try:
@@ -588,6 +594,7 @@ class Gestion():
                                 print(f"{self.pp.nom} est mort")
                             else :
                                 print(f"{self.pp.nom} est a {self.pp.pv} pv")
+                    print("")
             
             
             if self.pp.pv == 0 :
@@ -602,7 +609,7 @@ class Gestion():
                     pass
                 return True
             elif len(enemies) == 0:
-                print("Victiore")
+                print("Victoire")
                 print("")
                 print("-" * 100)
                 print("")
@@ -627,7 +634,7 @@ class Gestion():
                 choix = int(input("quel arme  voulez vous equiper?: "))
                 self.inventaire.armes.append(self.pp.armes[1])
                 self.pp.armes[1] = self.inventaire.armes.pop(choix)
-                print(f"vous avez equiper {self.pp.armes[1]}")
+                print(f"vous avez equiper {self.pp.armes[1].nom}")
             except ValueError:
                 print("choix invalide")
             except IndexError:
@@ -652,7 +659,7 @@ class Gestion():
                 if self.pp.armure.pv > 0:
                     self.inventaire.armures.append(self.pp.armure)
                 self.pp.armure = self.inventaire.armures.pop(choix)
-                print(f"vous avez equiper {self.pp.armure}")
+                print(f"vous avez equiper {self.pp.armure.nom}")
             except ValueError:
                 print("choix invalide")
             except IndexError:
@@ -734,6 +741,7 @@ class Gestion():
                         print(f"{nb}. {planete}")
                     nb += 1
         choix = input("ou voulez vous aller?(nom/numero): ")
+        print("")
         for planete in range(len(self.planetes)):
             if (self.planetes[planete].nom == choix or str(planete) == choix) and self.planetes[planete].detruit == False:
                 distance = self.planetes[planete].co - self.planete.co
@@ -753,10 +761,10 @@ class Gestion():
                                 self.pp.pv = self.pp.pv_max
                                 print("vous etes restoré")
 
-                        print("")
-                        print("-" * 100)
-                        print("")
-                        return
+                    print("")
+                    print("-" * 100)
+                    print("")
+                    return
                 else:
                     print("manque de carburant")
                     print("")
@@ -773,7 +781,7 @@ class Gestion():
         self.inventaire.spend(-100000000000, False, False)
         self.pp.armes[1] = self.shop.armurerie("eclaire(badass)")#sabre laser ametiste si legite, eclair de force sinon
         self.pp.armure = Armure("plot armor", 200, 70000) #armure mendalorienne
-        self.inventaire.equipage = [self.personnages[15], self.personnages[77], self.personnages[42], self.personnages[3]] #jabba, grievious, maul, vader
+        self.inventaire.equipage = [self.personnages[15], self.personnages[77], self.personnages[42], self.personnages[3]] #jabba, Grievous, maul, vader
         self.shop.vaisseau_pp("Star Destroyer", self.inventaire) #c good
         self.inventaire.nb_carburant = 10000000
         self.inventaire.nb_carotte = 10000000
