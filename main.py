@@ -25,6 +25,8 @@ while mort == False:
     print("")
     match choix:
         case "0":
+            print("=" * 100)
+            print("")
             match input("changer (1)d'arme ou (2) d'armure: "):
                 case "1":
                     print("")

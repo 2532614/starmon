@@ -476,7 +476,6 @@ class Gestion():
                     enemies[nb_target].subir_degats(aly.attaquer())
                     if enemies[nb_target].pv == 0 :
                         print(f"{enemies[nb_target].nom} est mort")
-                        clear = 
                         for prime in self.primes:
                             if  enemies[nb_target].nom in prime["perso"]:
                                 money = random.randint(5000, 15000)
@@ -632,13 +631,23 @@ class Gestion():
             print("")
             try:
                 choix = int(input("quel arme  voulez vous equiper?: "))
+                print("")
                 self.inventaire.armes.append(self.pp.armes[1])
                 self.pp.armes[1] = self.inventaire.armes.pop(choix)
                 print(f"vous avez equiper {self.pp.armes[1].nom}")
             except ValueError:
                 print("choix invalide")
+                print("")
             except IndexError:
                 print("choix invalide")
+                print("")
+            print("=" * 100)
+            print("")
+        else:
+            print("vous n'avez pas d'arme en stock")
+            print("")
+            print("=" * 100)
+            print("")
 
     
     def changer_armure(self)->None:
@@ -664,6 +673,13 @@ class Gestion():
                 print("choix invalide")
             except IndexError:
                 print("choix invalide")
+            print("=" * 100)
+            print("")
+        else:
+            print("vous n'avez pas d'armure en stock")
+            print("")
+            print("=" * 100)
+            print("")
                 
  
     def prime(self)-> None:
