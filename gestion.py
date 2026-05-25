@@ -520,33 +520,34 @@ class Gestion():
 
             for enemie in enemies:
                 if enemie.nom == "Jabba Desilijic Tiure":
-                    attaque = random.randint(2)
+                    attaque = random.randint(0,1)
                     if attaque == 0:
                         print(f"{enemie.nom} attaque")
-                    nb_target = random.randint(0,len(self.inventaire.equipage))
-                    try:
-                        print(f"il vise {self.inventaire.equipage[nb_target].nom}")
-                    except IndexError:
-                        print("il vise Pépé")
-                
-                    try:
-                        self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
-                        if self.inventaire.equipage[nb_target].pv == 0 :
-                            print(f"{self.inventaire.equipage[nb_target].nom} est mort")
-                            self.inventaire.equipage.pop(nb_target)
-                        else :
-                            print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv} pv")
-                    except IndexError:
-                        self.pp.subir_degats(enemie.attaquer())
-                        if self.pp.pv == 0 :
-                            print(f"{self.pp.nom} est mort")
-                        else :
-                            print(f"{self.pp.nom} est a {self.pp.pv} pv")
+                        nb_target = random.randint(0,len(self.inventaire.equipage))
+                        try:
+                            print(f"il vise {self.inventaire.equipage[nb_target].nom}")
+                        except IndexError:
+                            print("il vise Pépé")
+                    
+                        try:
+                            self.inventaire.equipage[nb_target].subir_degats(enemie.attaquer())
+                            if self.inventaire.equipage[nb_target].pv == 0 :
+                                print(f"{self.inventaire.equipage[nb_target].nom} est mort")
+                                self.inventaire.equipage.pop(nb_target)
+                            else :
+                                print(f"{self.inventaire.equipage[nb_target].nom} est a {self.inventaire.equipage[nb_target].pv} pv")
+                        except IndexError:
+                            self.pp.subir_degats(enemie.attaquer())
+                            if self.pp.pv == 0 :
+                                print(f"{self.pp.nom} est mort")
+                            else :
+                                print(f"{self.pp.nom} est a {self.pp.pv} pv")
                     else:
-                        nb_sbire = random.randint(3)+1
+                        nb_sbire = random.randint(1, 3)+1
                         print(f"Jabba Desilijic Tiure appelle {nb_sbire} sbire")
-                        for nb in nb_sbire:
-                            enemies.append(perso[22])
+                        for nb in range(nb_sbire):
+                            enemies.append(self.personnages[22].copy())
+                    print("")
                         
 
                 else:
